@@ -1,0 +1,200 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.main_conteiner_head {
+    max-width: 100%;
+    background-color: #0a3987;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.conteiner_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo_home {
+    margin-left: 50px;
+}
+
+.logo_home a,
+.user-options a {
+    text-decoration: none;
+    color: white;
+}
+
+.form-search {
+    display: flex;
+    flex-grow: 1;
+    max-width: 500px;
+}
+
+.form-search input {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.form-search button {
+    padding: 5px;
+    width: 70px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: red;
+}
+
+.user-options {
+    display: flex;
+    margin-right: 50px;
+}
+
+.logo_cadastro {
+    display: flex;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.car_conteiner {
+    position: relative;
+    display: inline-block;
+}
+
+.div_carrinho {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    padding: 10px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.quantidade {
+    position: relative;
+    bottom: -30px;
+    right: 20px;
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    border-radius: 50%;
+}
+
+.nav-menu {
+    display: flex;
+    padding: 5px;
+    gap: 30px;
+    background-color: #184f97;
+    color: white;
+    font-size: 12px;
+}
+
+.hamburguer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-menu ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-menu ul li {
+    padding: 3px;
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+}
+
+.menu-lateral.ativo {
+    transform: translateX(0);
+}
+
+.menu-topo {
+    background-color: #0a3987;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-topo .hamburguer {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#lista-categorias {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#lista-categorias li {
+    padding: 14px 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+#lista-categorias li:hover {
+    background-color: #f1f1f1;
+}
+
+.rodape {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: rgb(201, 201, 204);
+}
+
+@media (max-width: 768px) {
+    .conteiner_head {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .user-options {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-menu ul {
+        gap: 10px;
+        font-size: 10px;
+    }
+}

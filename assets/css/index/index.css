@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background-color: #fafafa;
+}
+
+.main_conteiner {
+    max-width: 100%;;
+    margin: 0 auto;
+    padding: 20px;
+}
+.conteiner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+
+.produto_conteiner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 20px 60px;
+}
+
+.produto{
+    display: flexbox;
+    justify-items: center; 
+    gap:20px;
+    padding:20px;
+
+}
+.produto{
+    width: 200px;
+    height: 330px;
+    border: 1px solid rgb(238, 238, 238);
+    border-radius: 3%;
+    background-color: white;
+    text-align: center;
+    transition: transform 0.2s ease;
+
+
+}
+.produto a{
+    text-decoration: none;
+    color:black
+}
+.preco  {
+    color:red;
+}
+
+.produto:hover{
+    transform: scale(1.03);
+}
+
+
+.produto img{
+    max-width: 100px;
+    height: auto;
+    margin-bottom:10px
+}
+
+.categoria_produto{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding:30px 70px;
+}
+
+.destaque {
+    background-color: #fafafa;
+    padding: 30px;
+    text-align: center;
+}
+
+.carrosel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item_carrosel {
+    display: flex;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    text-align: left;
+}
+
+.carousel-item img {
+    width: 300px;
+    object-fit: cover;
+}
+
+.info {
+    padding: 20px;
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .categoria_produto {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .item_carrosel {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item_carrosel img {
+        width: 100%;
+        height: auto;
+    }
+
+    .info {
+        text-align: center;
+    }
+}
+
