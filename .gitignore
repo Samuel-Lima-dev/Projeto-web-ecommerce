@@ -1,0 +1,32 @@
+/vendor/
+.env
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Arquivos de log e cache
+*.log
+*.cache
+
+# Configurações locais de IDEs/editors
+.vscode/
+.idea/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Backups e arquivos temporários
+*.bak
+*.tmp
+*.swp
+
+# Diretórios comuns de build (caso use JS ou ferramentas front-end)
+node_modules/
+dist/
+build/
+
+# Pasta de uploads (opcional — se não quiser versionar arquivos enviados por usuários)
+upload

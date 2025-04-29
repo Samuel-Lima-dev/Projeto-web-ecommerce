@@ -1,0 +1,17 @@
+{
+    "name": "julya/ecommerce",
+    "autoload": {
+        "psr-4": {
+            "Julya\\Ecommerce\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Samuel-Lima-dev",
+            "email": "samueldelima340@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
