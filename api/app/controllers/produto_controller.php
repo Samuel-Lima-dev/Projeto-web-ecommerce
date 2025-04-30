@@ -11,8 +11,13 @@ class ProdutoController{
 
     
     public function listar(){
+        header('Content-Type: Application/json');
         $produtos = $this->produtoModel->buscarTodos();
-        require __DIR__ . '/../views/produtos/listar_produtos.php';
+        echo json_encode([
+            'status' => 'success',
+            'data' => $produtos
+        ]);
+        exit;
     }
 
     public function registerProducts(){
@@ -26,23 +31,40 @@ class ProdutoController{
 
             // Validação simples
             if (empty($descricao) || empty($preco) || empty($estoque)) {
-                echo "Todos os campos obrigatórios devem ser preenchidos.";
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'status' => 'error',
+                    'messege' => 'Todos os campos obrigatórios devem ser preenchidos.'
+                ]);
                 return;
             }
 
-            $this->produtoModel->inserir($descricao, $preco, $estoque, $categoria_id, $fornecedor_id);
+            $resultado = $this->produtoModel->inserir($descricao, $preco, $estoque, $categoria_id, $fornecedor_id);
 
-            header('Location: index.php?controller=produto&action=listar');
+            header('Content-Type: application/jason');
+            if($resultado){
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Produto cadastrado com sucesso'
+                ]);
+            }else{
+                echo json_encode([
+                    'status' => 'error', 
+                    'message' => 'Erro ao cadastrar produto'
+                ]);
+            }
             exit();
 
         }
-        require __DIR__ . '/../views/produtos/cadastrar.php';
     }
 
     public function editProduct(){
+        header('Content-Type: application/jason');
         $id = $_GET['id'] ?? null;
         if(!$id){
-            echo"ID não informado";
+            echo json_encode([
+                'status' => 'error', 
+                'message' => 'ID não informado']);
             return;
         }
 
@@ -54,31 +76,46 @@ class ProdutoController{
             $categoria_id= $_POST['categoria_id'];
             $fornecedor_id = $_POST['fornecedor_id'];
 
-            $this->produtoModel->update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id);
-            header('Location: index.php?controller=produto&action=listar');
-            exit();
-        }
-        $produto = $this->produtoModel->buscarPorId($id);
-        if(!$produto){
-            echo"Produto não encontrado";
-            return;
+            $sucesso = $this->produtoModel->update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id);
 
+            if ($sucesso) {
+                echo json_encode(['status' => 'success', 'message' => 'Produto atualizado com sucesso']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Erro ao atualizar o produto']);
+            }
+            
+        }else{
+            $produto = $this->produtoModel->buscarPorId($id);
+            if ($produto) {
+                echo json_encode(['status' => 'success', 'data' => $produto]);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado']);
+            }
         }
-        require __DIR__ . '/../views/produtos/editar.php';
+        exit();
 
     }
 
-    public function excluir(){
+    public function excluir() {
+        header('Content-Type: application/json');
         $id = $_GET['id'] ?? null;
-        if(!$id){
-            echo"ID não informado";
+    
+        if (!$id) {
+            echo json_encode(['status' => 'error', 'message' => 'ID não informado']);
             return;
         }
-
-        $this->produtoModel->excluir($id);
-        header('location: index.php?controller=produto&action=listar');
-        exit(); 
+    
+        $sucesso = $this->produtoModel->excluir($id);
+    
+        if ($sucesso) {
+            echo json_encode(['status' => 'success', 'message' => 'Produto excluído com sucesso']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Erro ao excluir o produto']);
+        }
+    
+        exit();
     }
+    
 
 
 }

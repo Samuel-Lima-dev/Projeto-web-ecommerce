@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Produtos</title>
+</head>
+<body>
+  <h1>Lista de Produtos</h1>
+  <ul id="produtos-lista"></ul>
+
+  <script>
+    // Requisição para a rota listar produtos
+    fetch('http://localhost/ecommerce/api/index.php?controller=produto&action=listar')
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          const lista = document.getElementById('produtos-lista');
+          data.data.forEach(produto => {
+            const li = document.createElement('li');
+            li.textContent = `ID: ${produto.id} - ${produto.descricao} - R$ ${produto.preco}`;
+            lista.appendChild(li);
+          });
+        } else {
+          alert('Erro ao carregar produtos: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Erro na requisição:', error);
+      });
+  </script>
+</body>
+</html>
