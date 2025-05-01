@@ -11,13 +11,35 @@ class ProdutoController{
 
     
     public function listar(){
-        header('Content-Type: Application/json');
+        header('Content-Type: application/json');
         $produtos = $this->produtoModel->buscarTodos();
         echo json_encode([
             'status' => 'success',
             'data' => $produtos
         ]);
         exit;
+    }
+
+    public function buscarPorFiltro(){
+        header('Content-Type: application/json');
+
+        $descricao = $_GET['descricao'] ?? '';
+
+        $produtos =$this->produtoModel->buscarPorFiltro($descricao);
+        
+        if($produtos){
+            echo json_encode([
+                'status' => 'success',
+                'data' => $produtos
+            ]);
+        }else{
+            echo json_encode([
+                'status' => 'Error',
+                'messege' => 'Produto não encontrado'
+            ]);
+        }
+        exit();
+
     }
 
     public function registerProducts(){

@@ -28,6 +28,14 @@ class Produto{
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function buscarPorFiltro($descricao) {
+        $sql = "SELECT * FROM Produtos WHERE descricao LIKE ?";
+        $stmt = $this->conn->prepare($sql);
+        $busca = '%' . $descricao . '%';
+        $stmt->execute([$busca]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Cadastrar novo produto
     public function inserir($descricao, $preco, $estoque, $categoria_id, $fornecedor_id){
         $stmt = $this->conn->prepare(
