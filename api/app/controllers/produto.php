@@ -22,8 +22,8 @@ class ProdutoController{
 
     public function buscarPorFiltro(){
         header('Content-Type: application/json');
-
-        $descricao = $_GET['descricao'] ?? '';
+        $data = json_decode(file_get_contents('php://input'), true);
+        $descricao = $data['descricao'] ?? '';
 
         $produtos =$this->produtoModel->buscarPorFiltro($descricao);
         
@@ -45,13 +45,15 @@ class ProdutoController{
     public function registerProducts(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-            $descricao = $_POST['descricao'];
-            $preco = $_POST['preco'];
-            $estoque = $_POST['estoque'];
-            $categoria_id = $_POST['categoria_id'];
-            $fornecedor_id = $_POST['fornecedor_id'];
+            $data = json_decode(file_get_contents('php://input'), true);
 
-            // Validação simples
+            $descricao = $data['descricao'];
+            $preco = $data['preco'];
+            $estoque = $data['estoque'];
+            $categoria_id = $data['categoria_id'];
+            $fornecedor_id = $data['fornecedor_id'];
+
+            
             if (empty($descricao) || empty($preco) || empty($estoque)) {
                 header('Content-Type: application/json');
                 echo json_encode([
@@ -81,8 +83,10 @@ class ProdutoController{
     }
 
     public function editProduct(){
-        header('Content-Type: application/jason');
-        $id = $_GET['id'] ?? null;
+        header('Content-Type: application/json');
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'] ?? null;
         if(!$id){
             echo json_encode([
                 'status' => 'error', 
@@ -90,28 +94,37 @@ class ProdutoController{
             return;
         }
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $descricao = $_POST['descricao'];
-            $preco = $_POST['preco'];
-            $estoque = $_POST['estoque'];
-            $status_produto = $_POST['status_produto'];
-            $categoria_id= $_POST['categoria_id'];
-            $fornecedor_id = $_POST['fornecedor_id'];
+        if($_SERVER['REQUEST_METHOD'] === 'PUT'){
+            
+            $descricao = $data['descricao'] ?? '';
+            $preco = $data['preco'] ?? 0;
+            $estoque = $data['estoque'] ?? 0;
+            $status_produto = $data['status_produto'] ?? '';
+            $categoria_id= $data['categoria_id'] ?? null;
+            $fornecedor_id = $data['fornecedor_id'] ?? null;
 
             $sucesso = $this->produtoModel->update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id);
 
             if ($sucesso) {
-                echo json_encode(['status' => 'success', 'message' => 'Produto atualizado com sucesso']);
+                echo json_encode([
+                    'status' => 'success', 
+                    'message' => 'Produto atualizado com sucesso']);
             } else {
-                echo json_encode(['status' => 'error', 'message' => 'Erro ao atualizar o produto']);
+                echo json_encode([
+                    'status' => 'error', 
+                    'message' => 'Erro ao atualizar o produto']);
             }
             
         }else{
             $produto = $this->produtoModel->buscarPorId($id);
             if ($produto) {
-                echo json_encode(['status' => 'success', 'data' => $produto]);
+                echo json_encode([
+                    'status' => 'success', 
+                    'data' => $produto]);
             } else {
-                echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado']);
+                echo json_encode([
+                    'status' => 'error', 
+                    'message' => 'Produto não encontrado']);
             }
         }
         exit();
@@ -120,7 +133,18 @@ class ProdutoController{
 
     public function excluir() {
         header('Content-Type: application/json');
-        $id = $_GET['id'] ?? null;
+
+        if($_SERVER['REQUEST_METHOD'] !== 'delete'){
+            http_response_code(405);
+            echo json_encode([
+                'status'=>'Error',
+                'messege'=>'Método não permitido'
+            ]);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'] ?? '';
     
         if (!$id) {
             echo json_encode(['status' => 'error', 'message' => 'ID não informado']);
