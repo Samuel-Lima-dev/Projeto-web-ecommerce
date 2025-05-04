@@ -47,7 +47,7 @@ class Produto{
         $stmt->bindParam(':estoque', $estoque);
         $stmt->bindParam(':categoria', $categoria_id);
         $stmt->bindParam(':fornecedor', $fornecedor_id);
-        $stmt->execute();
+        return $stmt->execute();
 
     }
 
@@ -63,13 +63,13 @@ class Produto{
         $stmt->bindParam(':categoria', $categoria_id, PDO::PARAM_INT);
         $stmt->bindParam(':fornecedor', $fornecedor_id, PDO::PARAM_INT);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function excluir($id){
         $stmt = $this->conn->prepare("DELETE FROM Produtos WHERE id = :id");
         $stmt->bindParam(':id', $id);
-        $stmt->execute(); 
+        return $stmt->execute(); 
     }
 
 
