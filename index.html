@@ -6,44 +6,119 @@
     <meta name="description" content="Loja online com os melhores produtos e ofertas">
     <meta name="keywords" content="e-commerce, loja, ofertas, produtos">
     <meta name="author" content="nome do Projeto">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/index/index.css">
+    <link rel="stylesheet" href="pages/css/style.css">
+    <link rel="stylesheet" href="pages/css/index.css">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
         <div class="main_conteiner_head">
     
             <div class="conteiner_head">
-            <div class="logo_home"> <a href="index.html">Menu</a> </div>
+            <div class="logo_home"> <a href="index.html">Contrumix</a> </div>
                 
-                <form method="get" class="form-search">
-                    <input type="text" placeholder="Busca" name="search"><button type="submit"><img src="upload/logo/lupa.png"/></button>
-                </form>
-    
+            <div class="form-search">
+                <input type="text" placeholder="Buscar...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            
+            
                 <div class="user-options">
     
-                    <a href="pages/accounts/login.html">
-                        <div class='logo_cadastro'>
-                            <img src='upload/logo/cadastro.png'/>
-                            <p>Entrar</p>
-                        </div>
-                    </a>
-    
-                    <a href="pages/cart/cart.html">
-                        <div class="car_conteiner">
-                            <div class="div_carrinho">
-                                <img src="upload/logo/carrinho.png"></img>
-                            </div>
+                    <div>
+                        <a href="pages/login.html"><img src="img/simbolo-de-usuario-negro.png" alt="Login"  ></a>
+                        <a href="pages/cadastro.html" ></a>
+                        <a href="carrinho.html"><img src="img/carrinho_original__1_-removebg-preview.png " alt="Carrinho" ></a>
+                      </div>
                         </div>
                     </a>
                 </div>
+            </header>
+                <nav>
+                    <ul>
+                      <li><a href="#decoracao">Decoração</a></li>
+                      <li><a href="#eletrodomestico"> Eletrodoméstico</a></li>
+                      <li><a href="#construção">Construção</a></li>
+                      <li><a href="#automotivo">Automotivo</a></li>
+                    </ul>
+                  </nav>
     
                 
     
             </div>
         </div>
 </header>
+
+    <!-- Banner com autoplay -->
+
+     <div class="carousel">
+       <div class="slides">
+         <div class="slide ativo">
+            <a href="falso.html"> <!-- Link de pg que clicando na imageem vai -->
+                <img src="img/banner construção.png" alt="Slide 1">
+            </a>
+         </div>
+         <div class="slide">
+            <a href="falso.html">
+           <img src="img/Captura de tela 2025-04-30 110448.png" alt="Slide 2">
+            </a>
+         </div>
+         <div class="slide">
+            
+           <img src="img/banner3.jpg" alt="Slide 3">
+         </div>
+       </div>
+     
+       <button class="btn anterior" onclick="voltarSlide()">❮</button>
+       <button class="btn proximo" onclick="avancarSlide()">❯</button>
+     
+       <div class="indicadores">
+         <span onclick="mudarSlide(0)" class="ativo"></span>
+         <span onclick="mudarSlide(1)"></span>
+         <span onclick="mudarSlide(2)"></span>
+       </div>
+     </div>
+
+      <!-- Para Selecionar Categoria -->
+
+     <section id="decoracao" class="category-section">
+        <h2>Decoração</h2>
+        
+        <img src='upload/67f3286446f94.webp' class='img'>
+        <p>{$produto['descricao']}</p>
+        <p class='preco'><b>R$ {$produto['preco']}</b></p>
+     </div>
+     </section>
+
+     <section id="eletrodomestico" class="category-section">
+        <h2>Eletrodoméstico</h2>
+        
+        <img src='upload/67f3286446f94.webp' class='img'>
+        <p>{$produto['descricao']}</p>
+        <p class='preco'><b>R$ {$produto['preco']}</b></p>
+     </div>
+     </section>
+
+     <section id="construção" class="category-section">
+        <h2>Construção</h2>
+        
+        <img src='upload/67f3286446f94.webp' class='img'>
+        <p>{$produto['descricao']}</p>
+        <p class='preco'><b>R$ {$produto['preco']}</b></p>
+     </div>
+     </section>
+
+     <section id="automotivo" class="category-section">
+        <h2>Automotivo</h2>
+        
+        <img src='upload/67f3286446f94.webp' class='img'>
+        <p>{$produto['descricao']}</p>
+        <p class='preco'><b>R$ {$produto['preco']}</b></p>
+     </div>
+     </section>
+
 
 <div class="main_conteiner">
     <div class="conteiner">
@@ -96,26 +171,7 @@
                 </a>
             </div>
         </div>
-       
-        <section class="destaque">
-            <h2>Destaque do dia</h2>
-            <div class="carrosel">
-                <button>&#10094;</button>
 
-                <div itens_carrosel >
-                    <img src="upload/67f3286446f94.webp">
-                    <div class="info">
-                        <h3>geladeria</h3>
-                        <p>299,99</p>
-                        <p>199,77</p>
-                        <p>3x R$66,62</p>
-                    </div>
-                </div>
-                <button>&#10095;</button>
-            </div>
-                    
-        </section>
-       
         <div class="produto_conteiner">
             
 
@@ -171,14 +227,16 @@
                 
 
 
-        <script src="js/index.js"></script>
+        
 
     
     </div>
 
 </div>
 
-
+    <script src="pages/js/autoplay.js"></script>
+    <script src="pages/js/index.js"></script>
+    <script src="pages/js/script.js"></script>
 
 </body>
 </html>

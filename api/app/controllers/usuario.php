@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__ . '/../models/usuarios.php ';
+require_once __DIR__ . '/../models/usuarios.php';
 require_once __DIR__ . '/../models/carrinhos.php';
 
 use Firebase\jwt\jwt;
@@ -72,7 +72,7 @@ class UsuarioController{
         
     }
 
-    public function Login(){
+    public function login(){
         header('Content-Type: application/json');
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -113,7 +113,7 @@ class UsuarioController{
                 'carrinho'=>$carrinho_id,
                 'exp' => time()+3600
             ];
-            $jwt = JWT::encode($playload, $this->secretkey, 'HS256');
+            $jwt = JWT::encode($payload, $this->secretkey, 'HS256');
 
             echo json_encode([
                 'status' => 'success',
