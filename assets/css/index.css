@@ -1,5 +1,5 @@
 body {
-  background-color: #fafafa;
+  background-color: #f5f5f5;
 }
 
 .main_conteiner {
@@ -116,4 +116,38 @@ body {
 .indicadores .ativo {
   background-color: #717171;
 }
-  
+.categorias-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 30px;
+}
+
+.categoria-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.categoria-item img {
+  width: 130px;
+  height: 130px;
+  border-radius: 25px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.categoria-item img:hover {
+  transform: scale(1.05);
+}
+
+.categoria-item p {
+  margin-top: 10px;
+}

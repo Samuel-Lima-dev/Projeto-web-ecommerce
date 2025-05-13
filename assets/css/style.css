@@ -1,0 +1,118 @@
+/* Cabeçalho */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.main_conteiner_head {
+  background-color: #f5f5f5;
+  padding: 10px 15px;
+}
+.conteiner_head {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+.logo_home a {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #FF5722;
+  text-decoration: none;
+  font-weight: bold;
+}
+.logo_home img {
+  width: auto;
+  height: 50px;
+}
+.form-search {
+  display: flex;
+  width: 595px; 
+}
+.form-search input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 5px solid #FF5722;
+  border-radius: 20px 0 0 20px;
+  outline: none;
+  background-color: #FF5722;
+  color: black;
+  font-size: 14px;
+}
+.form-search button {
+  padding: 0 12px;
+  border: 1px solid #FF5722;
+  border-left: none;
+  border-radius: 0 20px 20px 0;
+  background-color: #FF5722;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-search i {
+  font-size: 14px;
+}
+.user-options {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.user-options a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: rgb(224, 223, 223);
+  border-radius: 50%;       
+  transition: background 0.3s ease;
+}
+.user-options a:hover {
+  background-color: #e64a19; 
+}
+.icon {
+  width: 40px;
+  height: 40px;
+  display: block;              
+  object-fit: contain;          
+  margin: 0;                   
+}
+@media (max-width: 768px) {
+  .conteiner_head {
+    flex-direction: column;
+  }
+  .form-search {
+    margin: 10px 0;
+  }
+}
+input::placeholder {
+    color: #ffffff; 
+  }
+  nav ul {
+    list-style: none;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    background-color: #FF5722;
+  }
+
+  nav ul li {
+    padding: 15px 20px;
+    margin-right: 50px;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: #FAFAFA; 
+    font-family: 'Poppins', sans-serif;    }
+
+  nav ul li a:hover {
+    color: rgb(255, 0, 0); 
+  }
