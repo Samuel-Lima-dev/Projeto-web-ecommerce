@@ -23,7 +23,7 @@ class Usuario{
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
         $stmt->bindParam(':cpf', $cpf);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function buscaClienteCadastrado($email){

@@ -23,9 +23,13 @@ class ProdutoController{
     public function buscarPorFiltro(){
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
-        $descricao = $data['descricao'] ?? '';
 
-        $produtos =$this->produtoModel->buscarPorFiltro($descricao);
+        $descricao = $data['descricao'] ?? '';
+        $categoria = $data['categoria'] ?? '';
+        $fornecedor = $data['fornecedor'] ?? '';
+
+
+        $produtos =$this->produtoModel->buscaPorFiltro($descricao ,$fornecedor, $categoria);
         
         if($produtos){
             echo json_encode([
