@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/carrinho.css">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+</head>
+<body>
+    <header>
+        <!-- Cabeçalho -->
+        <div class="main_conteiner_head">
+            <div class="conteiner_head">
+                <div class="logo_home"> 
+                    <a href="/index.html">Home Center</a> 
+                </div>
+                
+                <div class="form-search">
+                    <input type="text" placeholder="Buscar...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            
+            
+                <div class="user-options">
+                    <div>
+                        <a href="login.html"><img src="/./img/simbolo-de-usuario-negro.png" alt="Login"  ></a>
+                        <a href="cadastro.html" ></a>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </header>
+    
+    <main>
+    <!-- Categorias da lista -->    
+        <div class="lista_categorias">
+            <label class="produto">Produtos</label>
+            <label class="preco-unitario">Preço Unitário</label>
+            <label class="quantidade">Quantidade</label>
+            <label class="preco-total">Preço total</label>
+        </div>
+
+    <!-- Itens da lista --> 
+        <ul>
+
+            <li class="carrinho_item">
+                <label class="marker"> 
+                    <input type="checkbox">
+                    0
+                </label>
+                <div class="imagem">
+                    <img src='/upload/67f3286446f94.webp' class='img'>
+                    <label class="promo_desc">{Detalhes da promoção}</label>
+                </div>
+                <div class="item_name">
+                    <label class="nome">{Nome do produto}</label>
+                    <label class="descricao">{Descrição}</label>
+                </div>
+                <div class="preco_uni">
+                    <label class="preco_original">{Preço original}</label>
+                    <label class="preco_promo">{Preço em promoção}</label>
+                </div>
+                <div class="quantidade">
+                    <a href="#">
+                        <i class="bx bx-minus"></i>
+                    </a>
+                    <label>1</label>
+                    <a href="#">
+                        <i class="bx bx-plus"></i>
+                    </a>
+                </div>
+                <label class="preco_total">{Preço total}</label>
+            </li>
+            <li class="carrinho_item">
+                <label class="marker"> 
+                    <input type="checkbox">
+                    0
+                </label>
+                <div class="imagem">
+                    <img src='/upload/67f3286446f94.webp' class='img'>
+                    <label class="promo_desc">{Detalhes da promoção}</label>
+                </div>
+                <div class="item_name">
+                    <label class="nome">{Nome do produto}</label>
+                    <label class="descricao">{Descrição}</label>
+                </div>
+                <div class="preco_uni">
+                    <label class="preco_original">{Preço original}</label>
+                    <label class="preco_promo">{Preço em promoção}</label>
+                </div>
+                <div class="quantidade">
+                    <a href="#">
+                        <i class="bx bx-minus"></i>
+                    </a>
+                    <label>1</label>
+                    <a href="#">
+                        <i class="bx bx-plus"></i>
+                    </a>
+                </div>
+                <label class="preco_total">{Preço total}</label>
+            </li>
+            <li class="carrinho_item">
+                <label class="marker"> 
+                    <input type="checkbox">
+                    0
+                </label>
+                <div class="imagem">
+                    <img src='/upload/67f3286446f94.webp' class='img'>
+                    <label class="promo_desc">{Detalhes da promoção}</label>
+                </div>
+                <div class="item_name">
+                    <label class="nome">{Nome do produto}</label>
+                    <label class="descricao">{Descrição}</label>
+                </div>
+                <div class="preco_uni">
+                    <label class="preco_original">{Preço original}</label>
+                    <label class="preco_promo">{Preço em promoção}</label>
+                </div>
+                <div class="quantidade">
+                    <a href="#">
+                        <i class="bx bx-minus"></i>
+                    </a>
+                    <label>1</label>
+                    <a href="#">
+                        <i class="bx bx-plus"></i>
+                    </a>
+                </div>
+                <label class="preco_total">{Preço total}</label>
+            </li>
+            <li class="carrinho_item">
+                <label class="marker"> 
+                    <input type="checkbox">
+                    0
+                </label>
+                <div class="imagem">
+                    <img src='/upload/67f3286446f94.webp' class='img'>
+                    <label class="promo_desc">{Detalhes da promoção}</label>
+                </div>
+                <div class="item_name">
+                    <label class="nome">{Nome do produto}</label>
+                    <label class="descricao">{Descrição}</label>
+                </div>
+                <div class="preco_uni">
+                    <label class="preco_original">{Preço original}</label>
+                    <label class="preco_promo">{Preço em promoção}</label>
+                </div>
+                <div class="quantidade">
+                    <a href="#">
+                        <i class="bx bx-minus"></i>
+                    </a>
+                    <label>1</label>
+                    <a href="#">
+                        <i class="bx bx-plus"></i>
+                    </a>
+                </div>
+                <label class="preco_total">{Preço total}</label>
+            </li>
+
+        </ul>
+    <!-- Finalização -->
+        <div class="finisher">
+            <label class="select_all"> 
+                <input type="checkbox">
+                Selecionar Tudo (N)
+            </label>
+            <input type="button" class="excluir" value="Excluir">
+            <div class="preco_final">
+                <div class="total">
+                    <label class="texto">Total (X itens):</label>
+                    <label class="preco">{Preço Final}</label>
+                </div>
+                <div class="eco">
+                    <label class="texto">Economizou:</label>
+                    <label class="preco">{Quantidade Eco}</label>
+                </div>
+            </div>
+            <input type="button" class="finalizar" value="Continuar">
+        </div>
+    </main>
+</body>
+</html>
