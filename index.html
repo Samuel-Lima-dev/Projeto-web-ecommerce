@@ -6,36 +6,39 @@
     <meta name="description" content="Loja online com os melhores produtos e ofertas">
     <meta name="keywords" content="e-commerce, loja, ofertas, produtos">
     <meta name="author" content="nome do Projeto">
-    <link rel="stylesheet" href="pages/css/style.css">
-    <link rel="stylesheet" href="pages/css/index.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/index.css">
     <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 <body>
     <header>
         <div class="main_conteiner_head">
     
             <div class="conteiner_head">
-            <div class="logo_home"> <a href="index.html">Contrumix</a> </div>
+            <div class="logo_home"> 
+                <a href="index.html">
+                    <img src="assets/img/image-removebg-preview (1).png" alt="Home Center logo"/>
+                    Home Center</a>
+            </div> 
                 
             <div class="form-search">
-                <input type="text" placeholder="Buscar...">
+                <input type="text" placeholder="O que você procura?">
                 <button type="submit"><i class="fas fa-search"></i></button>
             </div>
             
             
                 <div class="user-options">
-    
-                    <div>
-                        <a href="pages/login.html"><img src="img/simbolo-de-usuario-negro.png" alt="Login"  ></a>
-                        <a href="pages/cadastro.html" ></a>
-                        <a href="pages/carrinho.html"><img src="img/carrinho_original__1_-removebg-preview.png " alt="Carrinho" ></a>
-                      </div>
-                        </div>
-                    </a>
+                        <a href="pages/accounts/login.html">
+                            <img src="assets/img/logo login (2).png" alt="Login" class="icon"></a>
+
+                        <a href="pages/carrinho/carrinho.html">
+                            <img src="assets/img/sacola.png" alt="Carrinho" class="icon"></a>
                 </div>
-            </header>
+    </header>
                 <nav>
                     <ul>
                       <li><a href="#decoracao">Decoração</a></li>
@@ -57,17 +60,17 @@
        <div class="slides">
          <div class="slide ativo">
             <a href="falso.html"> <!-- Link de pg que clicando na imageem vai -->
-                <img src="img/banner construção.png" alt="Slide 1">
+                <img src="assets/img/banner cons1.png" alt="Slide 1">
             </a>
          </div>
          <div class="slide">
             <a href="falso.html">
-           <img src="img/Captura de tela 2025-04-30 110448.png" alt="Slide 2">
+           <img src="assets/img/geladeira banner.jpg" alt="Slide 2">
             </a>
          </div>
          <div class="slide">
             
-           <img src="img/banner3.jpg" alt="Slide 3">
+           <img src="assets/img/Captura de tela 2025-04-30 110448.png" alt="Slide 3">
          </div>
        </div>
      
@@ -80,6 +83,29 @@
          <span onclick="mudarSlide(2)"></span>
        </div>
      </div>
+
+     <div class="categorias-container">
+        <a href="coziinha.html" class="categoria-item">
+            <img src="assets/img/cozinha.webp" alt="Cozinha"/>
+            <p>Cozinha</p>
+        </a>
+      
+        <a href="quarto.html" class="categoria-item">
+            <img src="assets/img/quarto.webp" alt="Quarto"/>
+            <p>Quarto</p>
+        </a>
+      
+        <a href="sala.html" class="categoria-item">
+            <img src="img/construcao.png" alt="Construção" />
+            <p>construção</p>
+        </a>
+
+        <a href="carro"class="categoria-item">
+            <img src="img/banner 2.jpg" alt="carro"/>
+            <p>carrro</p>
+         </a>
+      </div>
+      
 
       <!-- Para Selecionar Categoria -->
 
@@ -234,9 +260,9 @@
 
 </div>
 
-    <script src="pages/js/autoplay.js"></script>
-    <script src="pages/js/index.js"></script>
-    <script src="pages/js/script.js"></script>
+    <script src="assets/js/autoplay.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/script.js"></script>
 
 </body>
 </html>

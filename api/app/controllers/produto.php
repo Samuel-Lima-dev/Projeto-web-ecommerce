@@ -23,9 +23,13 @@ class ProdutoController{
     public function buscarPorFiltro(){
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
-        $descricao = $data['descricao'] ?? '';
 
-        $produtos =$this->produtoModel->buscarPorFiltro($descricao);
+        $descricao = $data['descricao'] ?? '';
+        $categoria = $data['categoria'] ?? '';
+        $fornecedor = $data['fornecedor'] ?? '';
+
+
+        $produtos =$this->produtoModel->buscaPorFiltro($descricao ,$fornecedor, $categoria);
         
         if($produtos){
             echo json_encode([
@@ -42,16 +46,16 @@ class ProdutoController{
 
     }
 
-    public function registerProducts(){
+    public function registrarProduto(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             $data = json_decode(file_get_contents('php://input'), true);
 
             $descricao = $data['descricao'];
-            $preco = $data['preco'];
-            $estoque = $data['estoque'];
-            $categoria_id = $data['categoria_id'];
-            $fornecedor_id = $data['fornecedor_id'];
+            $preco = (float)$data['preco'];
+            $estoque = (int)$data['estoque'];
+            $categoria_id = (int)$data['categoria_id'];
+            $fornecedor_id = (int)$data['fornecedor_id'];
 
             
             if (empty($descricao) || empty($preco) || empty($estoque)) {
@@ -82,11 +86,11 @@ class ProdutoController{
         }
     }
 
-    public function editProduct(){
+    public function editarProduto(){
         header('Content-Type: application/json');
 
         $data = json_decode(file_get_contents('php://input'), true);
-        $id = $data['id'] ?? null;
+        $id = (int)$data['id'] ?? null;
         if(!$id){
             echo json_encode([
                 'status' => 'error', 
@@ -97,11 +101,11 @@ class ProdutoController{
         if($_SERVER['REQUEST_METHOD'] === 'PUT'){
             
             $descricao = $data['descricao'] ?? '';
-            $preco = $data['preco'] ?? 0;
-            $estoque = $data['estoque'] ?? 0;
+            $preco = (float) $data['preco'] ?? 0;
+            $estoque = (int)$data['estoque'] ?? 0;
             $status_produto = $data['status_produto'] ?? '';
-            $categoria_id= $data['categoria_id'] ?? null;
-            $fornecedor_id = $data['fornecedor_id'] ?? null;
+            $categoria_id= (int)$data['categoria_id'] ?? null;
+            $fornecedor_id = (int)$data['fornecedor_id'] ?? null;
 
             $sucesso = $this->produtoModel->update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id);
 
@@ -144,7 +148,7 @@ class ProdutoController{
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
-        $id = $data['id'] ?? '';
+        $id = (int)$data['id'] ?? '';
     
         if (!$id) {
             echo json_encode(['status' => 'error', 'message' => 'ID não informado']);

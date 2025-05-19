@@ -1,5 +1,6 @@
 <?php 
-require_once __DIR__ . '/../models/usuarios.php ';
+require_once __DIR__ . '/../models/usuarios.php';
+require_once __DIR__ . '/../models/carrinhos.php';
 
 use Firebase\jwt\jwt;
 use Firebase\jwt\key;
@@ -9,9 +10,11 @@ $secretkey = $_ENV['JWT_SECRET'];
 class UsuarioController{
 
     private $userModel;
+    private $carrinhoModel;
 
     public function __construct(){
-        $this-> $userModel = new Usuario();
+        $this-> userModel = new Usuario();
+        $this-> carrinhoModel = new Carrinho();
     }
 
     public function criarConta(){
@@ -69,7 +72,7 @@ class UsuarioController{
         
     }
 
-    public function Login(){
+    public function login(){
         header('Content-Type: application/json');
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -96,12 +99,12 @@ class UsuarioController{
                 return;
             }
 
-            $carrinho = $this->buscarCarrinho($usuario['id']);
+            $carrinho = $this->carrinhoModel->buscarCarrinho($usuario['id']);
 
             if($carrinho && $carrinho['status_carrinho'] === 'aberto'){
                 $carrinho_id = $carrinho['id'];
             }else{
-                $carrinho_id = $this->criarCarrinho($usuario['id']);
+                $carrinho_id = $this->carrinhoModel->criarCarrinho($usuario['id']);
             }
 
             $payload=[
@@ -110,7 +113,7 @@ class UsuarioController{
                 'carrinho'=>$carrinho_id,
                 'exp' => time()+3600
             ];
-            $jwt = JWT::encode($playload, $this->secretkey, 'HS256');
+            $jwt = JWT::encode($payload, $this->secretkey, 'HS256');
 
             echo json_encode([
                 'status' => 'success',

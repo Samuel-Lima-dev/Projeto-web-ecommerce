@@ -1,32 +1,73 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Produtos</title>
+    <meta charset="UTF-8">
+    <title>Buscar Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        .resultado {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
-  <h1>Lista de Produtos</h1>
-  <ul id="produtos-lista"></ul>
 
-  <script>
-    // Requisição para a rota listar produtos
-    fetch('http://localhost/ecommerce/api/index.php?controller=produto&action=listar')
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          const lista = document.getElementById('produtos-lista');
-          data.data.forEach(produto => {
-            const li = document.createElement('li');
-            li.textContent = `ID: ${produto.id} - ${produto.descricao} - R$ ${produto.preco}`;
-            lista.appendChild(li);
-          });
-        } else {
-          alert('Erro ao carregar produtos: ' + data.message);
+    <h2>Buscar Produtos</h2>
+
+    <label>Descrição do produto:</label><br>
+    <input type="text" id="descricao"><br>
+
+    <label>Categoria:</label><br>
+    <input type="text" id="categoria"><br>
+
+    <label>Fornecedor:</label><br>
+    <input type="text" id="fornecedor"><br>
+
+    <button onclick="buscarProdutos()">Buscar</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        function buscarProdutos() {
+            const descricao = document.getElementById('descricao').value;
+            const categoria = document.getElementById('categoria').value;
+            const fornecedor = document.getElementById('fornecedor').value;
+
+            fetch('http://localhost/ecommerce/api/index.php?controller=produto&action=buscarPorFiltro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                descricao: descricao,
+                categoria: categoria,
+                fornecedor: fornecedor
+            })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('resultado').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('resultado').textContent = 'Erro ao buscar: ' + error.message;
+            });
+
         }
-      })
-      .catch(error => {
-        console.error('Erro na requisição:', error);
-      });
-  </script>
+    </script>
+
 </body>
 </html>

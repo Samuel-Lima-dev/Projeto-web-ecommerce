@@ -28,13 +28,32 @@ class Produto{
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function buscarPorFiltro($descricao) {
-        $sql = "SELECT * FROM Produtos WHERE descricao LIKE ?";
-        $stmt = $this->conn->prepare($sql);
-        $busca = '%' . $descricao . '%';
-        $stmt->execute([$busca]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function buscaPorFiltro($descricao ='', $fornecedorNome ='', $categoriaNome ='') {
+    $sql = "SELECT p.* FROM produtos p 
+            INNER JOIN categorias c ON p.categoria_id = c.id
+            INNER JOIN fornecedores f ON p.fornecedor_id = f.id
+            WHERE 1=1";
+    $params = [];
+
+    if (!empty($descricao)) {
+        $sql .= " AND p.descricao LIKE :descricao";
+        $params[':descricao'] = '%' . $descricao . '%';
     }
+
+    if (!empty($categoriaNome)) {
+        $sql .= " AND c.nome = :categoria";
+        $params[':categoria'] = $categoriaNome;
+    }
+    if (!empty($fornecedorNome)) {
+        $sql .= " AND f.nome = :fornecedor";
+        $params[':fornecedor'] = $fornecedorNome;
+    }
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     // Cadastrar novo produto
     public function inserir($descricao, $preco, $estoque, $categoria_id, $fornecedor_id){
@@ -47,7 +66,7 @@ class Produto{
         $stmt->bindParam(':estoque', $estoque);
         $stmt->bindParam(':categoria', $categoria_id);
         $stmt->bindParam(':fornecedor', $fornecedor_id);
-        $stmt->execute();
+        return $stmt->execute();
 
     }
 
@@ -63,13 +82,13 @@ class Produto{
         $stmt->bindParam(':categoria', $categoria_id, PDO::PARAM_INT);
         $stmt->bindParam(':fornecedor', $fornecedor_id, PDO::PARAM_INT);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function excluir($id){
         $stmt = $this->conn->prepare("DELETE FROM Produtos WHERE id = :id");
         $stmt->bindParam(':id', $id);
-        $stmt->execute(); 
+        return $stmt->execute(); 
     }
 
 
