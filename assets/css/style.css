@@ -7,6 +7,7 @@
 }
 .main_conteiner_head {
   background-color: #f5f5f5;
+
   padding: 10px 15px;
 }
 .conteiner_head {
@@ -116,3 +117,8 @@ input::placeholder {
   nav ul li a:hover {
     color: rgb(255, 0, 0); 
   }
+html {
+  scroll-behavior: smooth;
+}
+
+

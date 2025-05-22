@@ -11,7 +11,7 @@
     <title>Document</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -60,22 +60,31 @@
        <div class="slides">
          <div class="slide ativo">
             <a href="falso.html"> <!-- Link de pg que clicando na imageem vai -->
-                <img src="assets/img/banner cons1.png" alt="Slide 1">
+                <img src="assets/img/bannercons1.png" alt="Slide 1">
             </a>
          </div>
          <div class="slide">
             <a href="falso.html">
-           <img src="assets/img/geladeira banner.jpg" alt="Slide 2">
+           <img src="assets/img/banner3.jpg" alt="Slide 2">
             </a>
          </div>
          <div class="slide">
             
-           <img src="assets/img/Captura de tela 2025-04-30 110448.png" alt="Slide 3">
+           <img src="assets/img/Captura110448.png" alt="Slide 3">
          </div>
        </div>
      
-       <button class="btn anterior" onclick="voltarSlide()">❮</button>
-       <button class="btn proximo" onclick="avancarSlide()">❯</button>
+       <button class="btn anterior" onclick="voltarSlide()">  
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                <path d="M15 6l-6 6 6 6V6z"/>
+            </svg>
+        </button>
+        <button class="btn proximo" onclick="avancarSlide()"> 
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                <path d="M9 6l6 6-6 6V6z"/>
+            </svg>
+        </button>
+
      
        <div class="indicadores">
          <span onclick="mudarSlide(0)" class="ativo"></span>
@@ -96,171 +105,28 @@
         </a>
       
         <a href="sala.html" class="categoria-item">
-            <img src="img/construcao.png" alt="Construção" />
+            <img src="assets/img/cozinha.webp" alt="Construção" />
             <p>construção</p>
         </a>
 
         <a href="carro"class="categoria-item">
-            <img src="img/banner 2.jpg" alt="carro"/>
+            <img src="assets/img/quarto.webp" alt="carro"/>
             <p>carrro</p>
          </a>
       </div>
       
 
       <!-- Para Selecionar Categoria -->
-
-     <section id="decoracao" class="category-section">
-        <h2>Decoração</h2>
-        
-        <img src='upload/67f3286446f94.webp' class='img'>
-        <p>{$produto['descricao']}</p>
-        <p class='preco'><b>R$ {$produto['preco']}</b></p>
-     </div>
-     </section>
-
-     <section id="eletrodomestico" class="category-section">
-        <h2>Eletrodoméstico</h2>
-        
-        <img src='upload/67f3286446f94.webp' class='img'>
-        <p>{$produto['descricao']}</p>
-        <p class='preco'><b>R$ {$produto['preco']}</b></p>
-     </div>
-     </section>
-
-     <section id="construção" class="category-section">
-        <h2>Construção</h2>
-        
-        <img src='upload/67f3286446f94.webp' class='img'>
-        <p>{$produto['descricao']}</p>
-        <p class='preco'><b>R$ {$produto['preco']}</b></p>
-     </div>
-     </section>
-
-     <section id="automotivo" class="category-section">
-        <h2>Automotivo</h2>
-        
-        <img src='upload/67f3286446f94.webp' class='img'>
-        <p>{$produto['descricao']}</p>
-        <p class='preco'><b>R$ {$produto['preco']}</b></p>
-     </div>
-     </section>
-
-
-<div class="main_conteiner">
-    <div class="conteiner">
-
-        <div class="produto_conteiner">
-
-                    <div class='produto'>
-                            <a href='pages/details.php'>
-
-                                <img src='upload/67f3286446f94.webp' class='img'>
-                                <p>{$produto['descricao']}</p>
-                                <p class='preco'><b>R$ {$produto['preco']}</b></p>
-
-                            </a>
-                    </div>
-                    <div class='produto'>
-                        <a href='pages/details.php'>
-
-                            <img src='upload/67f3286446f94.webp' class='img'>
-                            <p>{$produto['descricao']}</p>
-                            <p class='preco'><b>R$ {$produto['preco']}</b></p>
-
-                        </a>
-                </div>
-                <div class='produto'>
-                    <a href='pages/details.php'>
-
-                        <img src='upload/67f3286446f94.webp' class='img'>
-                        <p>{$produto['descricao']}</p>
-                        <p class='preco'><b>R$ {$produto['preco']}</b></p>
-
-                    </a>
-            </div>
-            <div class='produto'>
-                <a href='pages/details.php'>
-
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-
-                </a>
-            </div>
-            <div class='produto'>
-                <a href='pages/details.php'>
-
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-
-                </a>
-            </div>
-        </div>
-
-        <div class="produto_conteiner">
+<div id="categoria-automotivo" class="categoria-produto"></div>
+<div id="categoria-eletro" class="categoria-produto"></div>
+<div id="categoria-eletrica" class="categoria-produto"></div>
             
 
-            <div class='produto'>
-                <a href='pages/details.php'>
-    
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-    
-                </a>
-            </div>
-            <div class='produto'>
-                <a href='pages/details.php'>
-    
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-    
-                </a>
-            </div>
-            <div class='produto'>
-                <a href='pages/details.php'>
-    
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-    
-                </a>
-            </div>
-            <div class='produto'>
-                <a href='pages/details.php'>
-    
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-    
-                </a>
-            </div>
-            <div class='produto'>
-                <a href='pages/details.php'>
-    
-                    <img src='upload/67f3286446f94.webp' class='img'>
-                    <p>{$produto['descricao']}</p>
-                    <p class='preco'><b>R$ {$produto['preco']}</b></p>
-    
-                </a>
-            </div>
+
+
             
-            
-            
-        </div>     
-                
-
-
-        
-
-    
-    </div>
-
-</div>
-
-    <script src="assets/js/autoplay.js"></script>
+         
+     <script src="teste2.js"></script>
     <script src="assets/js/index.js"></script>
     <script src="assets/js/script.js"></script>
 
