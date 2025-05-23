@@ -20,6 +20,37 @@ class ProdutoController{
         exit;
     }
 
+    public function buscarPorId() {
+        header('Content-Type: application/json');
+
+        // Pegando o ID do produto via GET (ex: ?id=10)
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID do produto não fornecido'
+            ]);
+            exit();
+        }
+
+        $produto = $this->produtoModel->buscarPorId($id);
+
+        if ($produto) {
+            echo json_encode([
+                'status' => 'success',
+                'data' => $produto
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Produto não encontrado'
+            ]);
+    }
+
+    exit();
+    }
+
     public function buscarPorFiltro(){
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);

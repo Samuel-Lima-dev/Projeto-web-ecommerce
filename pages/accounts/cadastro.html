@@ -9,14 +9,17 @@
 <body>
   <div class="form-container">
     <h1>SITE</h1>
-    <form class="form">
-      <input type="text" placeholder="Nome completo" required />
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Senha" required />
+    <form  method="POST" id="form" class="form">
+      <input type="text" id="nome" placeholder="Nome completo" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="senha" placeholder="Senha" required />
+      <input type="text" id="cpf" placeholder="Cpf" required />
       <button type="submit">Cadastrar</button>
       <p><a href="login.html">Já tem uma conta? Faça login</a></p>
     </form>
   </div>
+
+  <script src="../../assets/js/cadastro.js"></script>
 </body>
 </html>
 <!-- Cadastro editado, retirei o cpf -->

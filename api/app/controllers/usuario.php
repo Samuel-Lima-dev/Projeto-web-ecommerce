@@ -2,19 +2,20 @@
 require_once __DIR__ . '/../models/usuarios.php';
 require_once __DIR__ . '/../models/carrinhos.php';
 
-use Firebase\jwt\jwt;
-use Firebase\jwt\key;
-$secretkey = $_ENV['JWT_SECRET'];
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 
 class UsuarioController{
 
     private $userModel;
     private $carrinhoModel;
+    private $secretkey;
 
     public function __construct(){
         $this-> userModel = new Usuario();
         $this-> carrinhoModel = new Carrinho();
+        $this-> secretkey = $_ENV['JWT_SECRET'];
     }
 
     public function criarConta(){
@@ -41,6 +42,7 @@ class UsuarioController{
                     'status'=>'Error',
                     'message'=>'Email inválido'
                 ]);
+                return;
             }
 
             $usuario = $this->userModel->buscaClienteCadastrado($email);
@@ -109,6 +111,7 @@ class UsuarioController{
 
             $payload=[
                 'id' => $usuario['id'],
+                'user_name' =>$usuario['nome'],
                 'email' => $usuario['email'],
                 'carrinho'=>$carrinho_id,
                 'exp' => time()+3600

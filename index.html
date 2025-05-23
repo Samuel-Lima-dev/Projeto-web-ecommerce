@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/index.css">
     <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
@@ -21,14 +20,14 @@
             <div class="conteiner_head">
             <div class="logo_home"> 
                 <a href="index.html">
-                    <img src="assets/img/image-removebg-preview (1).png" alt="Home Center logo"/>
+                    <img src="assets/img/image-removebg-preview (1).png" alt="Home Center logo">
                     Home Center</a>
             </div> 
                 
-            <div class="form-search">
-                <input type="text" placeholder="O que você procura?">
+            <form action="pages/busca.html" class="form-search" method="GET">
+                <input type="text" name="buscar" placeholder="O que você procura?">
                 <button type="submit"><i class="fas fa-search"></i></button>
-            </div>
+            </form>
             
             
                 <div class="user-options">
@@ -37,7 +36,10 @@
 
                         <a href="pages/carrinho.html">
                             <img src="assets/img/sacola.png" alt="Carrinho" class="icon"></a>
-                </div>
+                        </div>
+
+            </div>
+        </div>
     </header>
                 <nav>
                     <ul>
@@ -47,12 +49,7 @@
                       <li><a href="#automotivo">Automotivo</a></li>
                     </ul>
                   </nav>
-    
-                
-    
-            </div>
-        </div>
-</header>
+
 
     <!-- Banner com autoplay -->
 
@@ -95,38 +92,36 @@
 
      <div class="categorias-container">
         <a href="coziinha.html" class="categoria-item">
-            <img src="assets/img/cozinha.webp" alt="Cozinha"/>
+            <img src="assets/img/cozinha.webp" alt="Cozinha">
             <p>Cozinha</p>
         </a>
       
         <a href="quarto.html" class="categoria-item">
-            <img src="assets/img/quarto.webp" alt="Quarto"/>
+            <img src="assets/img/quarto.webp" alt="Quarto">
             <p>Quarto</p>
         </a>
       
         <a href="sala.html" class="categoria-item">
-            <img src="assets/img/cozinha.webp" alt="Construção" />
+            <img src="assets/img/cozinha.webp" alt="Construção">
             <p>construção</p>
         </a>
 
-        <a href="carro"class="categoria-item">
-            <img src="assets/img/quarto.webp" alt="carro"/>
+        <a href="carro.html"class="categoria-item">
+            <img src="assets/img/quarto.webp" alt="carro">
             <p>carrro</p>
          </a>
       </div>
       
 
       <!-- Para Selecionar Categoria -->
-<div id="categoria-automotivo" class="categoria-produto"></div>
-<div id="categoria-eletro" class="categoria-produto"></div>
-<div id="categoria-eletrica" class="categoria-produto"></div>
+    <div id="categoria-automotivo" class="categoria-produto"></div>
+    <div id="categoria-eletro" class="categoria-produto"></div>
+    <div id="categoria-eletrica" class="categoria-produto"></div>
             
 
 
 
-            
-         
-     <script src="teste2.js"></script>
+       
     <script src="assets/js/index.js"></script>
     <script src="assets/js/script.js"></script>
 
