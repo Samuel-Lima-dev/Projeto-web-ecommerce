@@ -15,7 +15,22 @@ class Carrinho{
 
 
     public function listarItensCarrinho($id_carrinho){
-        $stmt = $this->conn->query("SELECT * FROM Itens_Carrinho");
+        $sql = "SELECT 
+                    ic.quantidade,
+                    ic.preco_unitario,
+                    p.id AS produto_id,
+                    p.descricao,
+                    p.preco,
+                    p.estoque,
+                    p.categoria_id,
+                    p.status_produto
+                FROM Itens_Carrinho ic
+                INNER JOIN Produtos p ON ic.produto_id = p.id
+                WHERE ic.carrinho_id = :id_carrinho";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id_carrinho', $id_carrinho, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -30,11 +45,10 @@ class Carrinho{
     }
     
     public function buscarCarrinho($id_usuario){
-        $stmt = $this->conn->prepare("SELECT * FROM Carrinhos WHERE usuario_id = :id_usuario");
+        $stmt = $this->conn->prepare("SELECT * FROM Carrinhos WHERE usuario_id = :id_usuario AND status_carrinho = 'aberto' LIMIT 1");
         $stmt->bindParam(':id_usuario', $id_usuario);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC); 
-         
     }
 
     // verificar se o item especifico já esta no carrinho

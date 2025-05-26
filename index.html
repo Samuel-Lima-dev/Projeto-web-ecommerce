@@ -18,25 +18,27 @@
         <div class="main_conteiner_head">
     
             <div class="conteiner_head">
-            <div class="logo_home"> 
-                <a href="index.html">
-                    <img src="assets/img/image-removebg-preview (1).png" alt="Home Center logo">
-                    Home Center</a>
-            </div> 
+                <div class="logo_home"> 
+                    <a href="index.html">
+                        <img src="assets/img/image-removebg-preview (1).png" alt="Home Center logo">
+                        Home Center</a>
+                </div> 
                 
-            <form action="pages/busca.html" class="form-search" method="GET">
-                <input type="text" name="buscar" placeholder="O que você procura?">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
+                <form action="pages/busca.html" class="form-search" method="GET">
+                    <input type="text" name="buscar" placeholder="O que você procura?">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
             
             
                 <div class="user-options">
                         <a href="pages/accounts/login.html">
-                            <img src="assets/img/logo login (2).png" alt="Login" class="icon"></a>
-
+                            <img src="assets/img/logo login (2).png" alt="Login" class="icon">
+                        </a>
+                        <button onclick="logout()">Sair</button>
                         <a href="pages/carrinho.html">
-                            <img src="assets/img/sacola.png" alt="Carrinho" class="icon"></a>
-                        </div>
+                            <img src="assets/img/sacola.png" alt="Carrinho" class="icon">
+                        </a>
+                </div>
 
             </div>
         </div>
@@ -124,6 +126,7 @@
        
     <script src="assets/js/index.js"></script>
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/logout.js"></script>
 
 </body>
 </html>

@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . '/../models/carrinhos.php';
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 
-class carrinho{
+class CarrinhoController{
     private $carrinhoModel ;
 
     public function __construct(){
@@ -11,32 +13,53 @@ class carrinho{
     } 
 
     public function listarItemCarrinho(){
-        header('Content-type: application/json');
-        $data = json_decode(file_get_contents('php://input'), true);
-        $id_carrinho = (int)$data['id_carrinho'] ?? '';
+        header('Content-Type: application/json');
 
-        if(!$id_carrinho){
-            echo json_encode([
-                'status'=>'Error',
-                'message'=>'ID do carrinho é obrigatório'
-            ]);
+        // Obter Authorization header corretamente
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+
+        if (!$authHeader && function_exists('getallheaders')) {
+            $headers = getallheaders();
+            $authHeader = $headers['Authorization'] ?? '';
+        }
+
+
+        if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            echo json_encode(['status' => 'error', 'message' => 'Token não enviado']);
             return;
         }
 
-        $lista_item = $this->carrinhoModel->listarItensCarrinho($id_carrinho);
+        $jwt = $matches[1];
 
-        if($lista_item){
+        try {
+            $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+            $usuarioId = $decoded->id;
+            $carrinhoId = $decoded->carrinho;
+
+            // Buscar carrinho do usuário
+            $carrinho = $this->carrinhoModel->buscarCarrinho($usuarioId);
+
+            if(!$carrinho){
+                echo json_encode(['status' => 'error', 'message' => 'Carrinho não encontrado']);
+                return;
+            }
+
+            $itens = $this->carrinhoModel->listarItensCarrinho($carrinho['id']);
+
             echo json_encode([
-                'status'=>'success',
-                'data'=>$lista_item
+                'status' => 'success',
+                'carrinho_id' => $carrinho['id'],
+                'itens' => $itens
             ]);
-        }else{
-            echo json_encode([
-                'status'=>'Error',
-                'message'=>'Carrinho está vazio'
-            ]);
+
+        } catch (ExpiredException $e) {
+            http_response_code(401);
+            echo json_encode(['status' => 'error', 'message' => 'Token expirado']);
+        } catch (Exception $e) {
+            http_response_code(401);
+            echo json_encode(['status' => 'error', 'message' => 'Token inválido']);
         }
-        exite();
     }
 
     public function adicionarItem(){

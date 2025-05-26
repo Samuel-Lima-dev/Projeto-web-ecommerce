@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
         if (data.status === 'success') {
             
-            // Armazena token no localStorage (ou cookies, conforme necessário)
+            // Armazena token no localStorage
             localStorage.setItem('token', data.token);
 
             // Redireciona o usuário

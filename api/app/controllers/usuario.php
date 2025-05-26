@@ -114,9 +114,9 @@ class UsuarioController{
                 'user_name' =>$usuario['nome'],
                 'email' => $usuario['email'],
                 'carrinho'=>$carrinho_id,
-                'exp' => time()+3600
+                'exp' => time() + (60 * 60) // 1 hora
             ];
-            $jwt = JWT::encode($payload, $this->secretkey, 'HS256');
+            $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
 
             echo json_encode([
                 'status' => 'success',
