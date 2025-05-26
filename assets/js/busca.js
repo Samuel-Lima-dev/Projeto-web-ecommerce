@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(res => res.json())
             .then(dados => {
                 const resultadoDiv = document.getElementById("resultados");
+                       function buscarProdutos() {
+            const descricao = document.getElementById('descricao').value;
+            const categoria = document.getElementById('categoria').value;
+            const fornecedor = document.getElementById('fornecedor').value;
 
                 if (dados.length > 0) {
                     dados.forEach(produto => {

@@ -1,5 +1,6 @@
 const token = localStorage.getItem('token');
 if (!token) {
+<<<<<<< HEAD
     window.location.href = '../pages/accounts/login.html'; // redireciona se não estiver logado
 }
 
@@ -67,4 +68,3 @@ if (data.status === 'success') {
     alert(data.message);
 }
 })
-
