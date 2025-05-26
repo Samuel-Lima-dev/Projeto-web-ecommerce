@@ -1,4 +1,16 @@
-const categorias = ['automotivo', 'eletro', 'eletrica'];
+const categorias = ['automotivo', 'eletro', 'eletrica', 'ACES DE BANHEIROS / PIAS E GABINETES', 'ACES. BANHEIROS/CONEXÕES/GABINETES', 'ESQUADRIAS',
+    'LUSTRES E LUMINARIAS', 'MÓVEIS E DECORAÇÕES','PIAS E GABINETES',
+    'LOUÇAS METAIS SANIT'];
+
+const nomesExibicao = {
+  automotivo: 'Automotivo',
+  eletro: 'Eletrodomésticos',
+    'ACES. BANHEIROS/CONEXÕES/GABINETES:': 'Banheiro',
+  eletrica: 'Elétrica',
+    'ACES DE BANHEIROS / PIAS E GABINETES': 'Acessórios para Banheiro',
+    ESQUADRIAS: 'Ferramentas e Acessórios',
+    'LOUÇAS METAIS SANIT':'Acessórios'
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     categorias.forEach(categoria => carregarProdutosPorCategoria(categoria));
@@ -30,6 +42,7 @@ function normalizarCategoria(categoria) {
     return categoria
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+        .replace(/[^a-zA-Z0-9]/g, "") // Remove tudo que não for letra ou número
         .toLowerCase();
 }
 
@@ -46,7 +59,8 @@ function renderizarProdutos(categoria, produtos) {
     container.innerHTML = ''; // Limpa conteúdo anterior
 
     const titulo = document.createElement('h2');
-    titulo.textContent = capitalizar(categoria);
+    titulo.classList.add('titulo-categoria');
+    titulo.textContent = nomesExibicao[categoria] || capitalizar(categoria);
     container.appendChild(titulo);
 
   
@@ -64,7 +78,7 @@ produtos.slice(0,10).forEach(produto => {
 
      divProduto.innerHTML = `
         <a href="pages/accounts/detalhes.html?id=${produto.id}" class="link-produto">
-             <img src="img/${produto.imagem}" alt="${produto.nome}">
+             <img src="assets/img/teste.webp" alt="${produto.nome}">
              <h3>${produto.descricao}</h3>
              <p>R$ ${Number(produto.preco).toFixed(2)}</p>
          </a>
@@ -97,11 +111,9 @@ produtos.slice(0,10).forEach(produto => {
 
     container.appendChild(linhaProdutos);
 
-    // Adiciona o botão "Mais opções"
-    const maisOpcoes = document.createElement('div');
+  const maisOpcoes = document.createElement('div');
     maisOpcoes.classList.add('mais-opcoes');
-
-    maisOpcoes.innerHTML = `<a href="#">Mais opções</a>`;
+    maisOpcoes.innerHTML = `<a href="categoria.html?categoria=${encodeURIComponent(categoria)}">Mais opções</a>`;
     container.appendChild(maisOpcoes);
 
 

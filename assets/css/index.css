@@ -46,6 +46,8 @@ body {
     background-color: #fff;
     text-align: center;
     transition: transform 0.3s;
+    margin-bottom: 10px; 
+    margin-top: 20px;
 }
 
 .produto:hover {
@@ -211,13 +213,13 @@ body {
   margin-top: 10px;
 }
 .mais-opcoes {
-    margin-top: 10px;
+    margin-top: 0;
     text-align: right;
     padding-right: 20px;
 }
 
 .mais-opcoes a {
-    color: #f5a623;
+    color: #ff3c00;
     text-decoration: none;
     font-weight: bold;
     transition: text-decoration 0.3s;

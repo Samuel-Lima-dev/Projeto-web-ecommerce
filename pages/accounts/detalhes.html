@@ -1,18 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Loja online com os melhores produtos e ofertas">
+    <meta name="keywords" content="e-commerce, loja, ofertas, produtos">
+    <meta name="author" content="nome do Projeto">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <title>Home Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    
 </head>
+
+<body>
+    <header>
+        <div class="main_conteiner_head">
+    
+            <div class="conteiner_head">
+            <div class="logo_home"> 
+                <a href="/ecommerce/index.html">
+                    <img src="../../assets/img/logo.png" alt="Home Center logo">
+                    Home Center</a>
+            </div> 
+                
+            <form action="../busca.html" class="form-search" method="GET">
+                <input type="text" name="buscar" placeholder="O que você procura?">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            
+            
+                <div class="user-options">
+                        <a href="../accounts/login.html">
+                            <img src="../../assets/img/logo login (2).png" alt="Login" class="icon"></a>
+
+                        <a href="carrinho.html">
+                            <img src="../../assets/img/sacola.png" alt="Carrinho" class="icon"></a>
+                        </div>
+
+            </div>
+        </div>
+    </header>
+                <nav>
+                    <ul>
+                      <li><a href="#decoracao">Decoração</a></li>
+                      <li><a href="#eletrodomestico"> Eletrodoméstico</a></li>
+                      <li><a href="#construção">Construção</a></li>
+                      <li><a href="#automotivo">Automotivo</a></li>
+                    </ul>
+                  </nav>
 <body>
 
-    <div class="produto-detalhe" id="detalhes-produto">
-        <p>Carregando detalhes do produto...</p>
-    </div>
-    <div class="add_produto">
+    <main id="detalhes-produto" class="container">
+        <!-- Os detalhes do produto serão carregados aqui via JS -->
+    </main>
 
-    </div>
+    <footer>
+        <p>&copy; 2025 E-Commerce Center. Todos os direitos reservados.</p>
+    </footer>
+
+  
     <script src="../../assets/js/detalhes.js"></script>
 
 </body>
