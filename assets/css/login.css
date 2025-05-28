@@ -15,12 +15,18 @@ body {
     text-align: center;
   }
   
-  h2 {
-    color: #e65100;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: bold;
-  }
+.logo_home a {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #FF5722;
+  text-decoration: none;
+  font-weight: bold;
+}
+.logo_home img {
+  width: auto;
+  height: 50px;
+}
   
   form input {
     width: 100%;
