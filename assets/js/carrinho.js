@@ -1,5 +1,9 @@
 const token = localStorage.getItem('token');
 if (!token) {
+<<<<<<< Updated upstream
+=======
+ HEAD
+>>>>>>> Stashed changes
     window.location.href = '../pages/accounts/login.html'; // redireciona se não estiver logado
 }
 

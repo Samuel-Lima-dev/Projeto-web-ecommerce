@@ -1,15 +1,21 @@
-const categorias = ['automotivo', 'eletro', 'eletrica', 'ACES DE BANHEIROS / PIAS E GABINETES', 'ACES. BANHEIROS/CONEXÕES/GABINETES', 'ESQUADRIAS',
-    'LUSTRES E LUMINARIAS', 'MÓVEIS E DECORAÇÕES','PIAS E GABINETES',
-    'LOUÇAS METAIS SANIT'];
+const categorias = ['UTILIDADES PLASTICOS / CAMEBA', 'eletro', 'eletrica', 'ACES DE BANHEIROS / PIAS E GABINETES', 'ACES. BANHEIROS/CONEXÕES/GABINETES', 'ESQUADRIAS',
+    'LUSTRES E LUMINARIAS', 'MÓVEIS E DECORAÇÕES','PIAS E GABINETES','TINTAS E ACESSORIOS','automotivo','ACES. BANHEIROS/GABINETES','BALCAO DE FERRAMENTAS',
+    'LOUÇAS METAIS SANIT','UTILIDADES PLASTICOS E CAMEBA'];
 
 const nomesExibicao = {
-  automotivo: 'Automotivo',
-  eletro: 'Eletrodomésticos',
-    'ACES. BANHEIROS/CONEXÕES/GABINETES:': 'Banheiro',
+  'UTILIDADES PLASTICOS / CAMEBA': 'Linha De Banho',
+   eletro: 'Eletrodomésticos',
   eletrica: 'Elétrica',
-    'ACES DE BANHEIROS / PIAS E GABINETES': 'Acessórios para Banheiro',
-    ESQUADRIAS: 'Ferramentas e Acessórios',
-    'LOUÇAS METAIS SANIT':'Acessórios'
+  automotivo: 'Automotivo',
+  'ACES DE BANHEIROS / PIAS E GABINETES': 'Acessórios para Banheiro',
+  'ACES. BANHEIROS/CONEXÕES/GABINETES': 'Banheiro',
+  ESQUADRIAS: 'Ferramentas e Acessórios',
+  'LOUÇAS METAIS SANIT': 'Acessórios',
+  'LUSTRES E LUMINARIAS': 'Iluminação',
+  'MÓVEIS E DECORAÇÕES': 'Móveis e Decoração',
+  'PIAS E GABINETES': 'Gabinetes e Pias',
+  'TINTAS E ACESSORIOS': 'Tintas','BALCAO DE FERRAMENTAS': 'Ferramenta',
+  'ACES. BANHEIROS/GABINETES': 'Utilidades para Banheiro', 'UTILIDADES PLASTICOS E CAMEBA':'Utilidades', 'UTILIDADES DOMÉSTICAS PRESENTES': 'Podutos'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -77,7 +83,7 @@ produtos.slice(0,10).forEach(produto => {
         
 
      divProduto.innerHTML = `
-        <a href="pages/accounts/detalhes.html?id=${produto.id}" class="link-produto">
+        <a href="/ecommerce/pages/accounts/detalhes.html?id=${produto.id}" class="link-produto">
              <img src="assets/img/teste.webp" alt="${produto.nome}">
              <h3>${produto.descricao}</h3>
              <p>R$ ${Number(produto.preco).toFixed(2)}</p>
@@ -113,7 +119,7 @@ produtos.slice(0,10).forEach(produto => {
 
   const maisOpcoes = document.createElement('div');
     maisOpcoes.classList.add('mais-opcoes');
-    maisOpcoes.innerHTML = `<a href="categoria.html?categoria=${encodeURIComponent(categoria)}">Mais opções</a>`;
+    maisOpcoes.innerHTML = `<a href="/ecommerce/categoria.html?categoria=${encodeURIComponent(categoria)}">Mais opções</a>`;
     container.appendChild(maisOpcoes);
 
 
@@ -132,4 +138,5 @@ produtos.slice(0,10).forEach(produto => {
     function capitalizar(texto) {
         return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
+
 
