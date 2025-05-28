@@ -56,18 +56,36 @@ if (!produtoId) {
 }
 
 // Função para adicionar ao carrinho e redirecionar
-function adicionarAoCarrinho(id, descricao, preco) {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+function adicionarAoCarrinho(id_produto, quantidade, preco) {
 
-    const itemExistente = carrinho.find(item => item.id === id);
-    if (itemExistente) {
-        itemExistente.quantidade += 1;
-    } else {
-        carrinho.push({ id, descricao, preco, quantidade: 1 });
+    const id_carrinho = localStorage.getItem('carrinho');
+    console.log("id_carrinho:", id_carrinho);
+
+
+    if (!id_carrinho) {
+        alert("Carrinho não encontrado. Faça login novamente.");
+        return;
     }
+    
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-
-    // Redirecionar para a página do carrinho
-    window.location.href = "carrinho.html";
+    fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=adicionarItem', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_produto,
+            id_carrinho: parseInt(id_carrinho),
+            quantidade: 1,
+            preco
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            window.location.href = "../carrinho.html";
+        } else {
+            alert("Erro: " + data.message);
+        }
+    });
 }

@@ -62,63 +62,78 @@ class CarrinhoController{
         }
     }
 
-    public function adicionarItem(){
-        
-        header('Content-Type: application/json');
-        $data = json_decode(file_get_contents('php://input'), true);
+    public function adicionarItem() {
+    header('Content-Type: application/json');
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $id_produto = (int)$data['id_produto'] ?? '';
-            $id_carrinho = (int)$data['id_carrinho'] ?? '';
-            $quantidade = (int)$data['quantidade'] ?? '';
-            $preco = (float)$data['preco'] ?? '';
+        // Validação dos dados
+        if (!isset($data['id_produto'], $data['id_carrinho'], $data['quantidade'], $data['preco'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Parâmetros inválidos.'
+            ]);
+            exit();
+        }
 
-            $item = $this->carrinhoModel->buscarItemCarrinho($id_carrinho, $id_produto);
+        $id_produto = (int) $data['id_produto'];
+        $id_carrinho = (int) $data['id_carrinho'];
+        $quantidade = (int) $data['quantidade'];
+        $preco = (float) $data['preco'];
 
-            if(!$item){
-                $novoproduto = $this->carrinhoModel->adicionarItemCarrinho($id_carrinho, $id_produto, $quantidade, $preco);
+        // Verifica se o item já existe no carrinho
+        $item = $this->carrinhoModel->buscarItemCarrinho($id_carrinho, $id_produto);
 
-                if($novoproduto){
-                    echo json_encode([
-                        'status'=>'success',
-                        'message'=>'Item adicionado com sucesso'
-                    ]);
-                }
-            }else{
+        if (!$item) {
+            // Item novo
+            $novoItem = $this->carrinhoModel->adicionarItemCarrinho($id_carrinho, $id_produto, $quantidade, $preco);
 
-                // codigo duplicado UNIFICAR
-                if ($quantidade < 0){
-                    $nova_quantidade = $item['quantidade'] + $quantidade;
-                    $novo_preco = $item['preco_unitario'] * $nova_quantidade;
-                    $novoproduto = $this->carrinhoModel->atualizarItemCarrinho($id_carrinho, $id_produto, $nova_quantidade, $novo_preco);
-
-                    if($novoproduto){
-                        echo json_encode([
-                            'status'=>'success',
-                            'message'=>'Item atualizado com sucesso'
-                        ]);
-                    }
-
-                }else{
-                    $nova_quantidade = $item['quantidade'] + $quantidade;
-                    $novo_preco = $item['preco_unitario'] * $nova_quantidade;
-                    $novoproduto = $this->carrinhoModel->atualizarItemCarrinho($id_carrinho, $id_produto, $nova_quantidade, $novo_preco);
-
-                    if($novoproduto){
-                        echo json_encode([
-                            'status'=>'success',
-                            'message'=>'Item atualizado com sucesso'
-                        ]);
-                    }
-                }
+            if ($novoItem) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Item adicionado com sucesso'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erro ao adicionar item'
+                ]);
             }
 
+        } else {
+            // Item já existe – atualizar quantidade e preço
+            $nova_quantidade = $item['quantidade'] + $quantidade;
+
+            if ($nova_quantidade <= 0) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Quantidade inválida.'
+                ]);
+                exit();
+            }
+
+            $novo_preco = $item['preco_unitario'] * $nova_quantidade;
+
+            $atualizado = $this->carrinhoModel->atualizarItemCarrinho($id_carrinho, $id_produto, $nova_quantidade, $novo_preco);
+
+            if ($atualizado) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Item atualizado com sucesso'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erro ao atualizar item'
+                ]);
+            }
         }
-        exit();
-        
-        
     }
+
+    exit();
+}
+
 
     public function excluirItem(){
         header('Content-Type: application/json');
