@@ -109,6 +109,7 @@ class UsuarioController{
                 $carrinho_id = $this->carrinhoModel->criarCarrinho($usuario['id']);
             }
 
+
             $payload=[
                 'id' => $usuario['id'],
                 'user_name' =>$usuario['nome'],
@@ -121,6 +122,7 @@ class UsuarioController{
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Login realizado com sucesso',
+                'id_carrinho' => $carrinho_id,
                 'token' => $jwt
             ]);
             exit();

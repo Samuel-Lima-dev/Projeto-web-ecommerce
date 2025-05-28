@@ -64,7 +64,7 @@ class Carrinho{
     public function adicionarItemCarrinho($id_carrinho, $id_produto, $quantidade, $preco){
         $stmt = $this->conn->prepare(
             "INSERT INTO Itens_Carrinho(carrinho_id, produto_id, quantidade, preco_unitario) 
-            UPDATE (:id_carrinho, :id_produto, :quantidade, :preco )
+            VALUES (:id_carrinho, :id_produto, :quantidade, :preco )
             "
         );
         $stmt->bindParam(':id_carrinho', $id_carrinho);

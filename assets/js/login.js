@@ -17,11 +17,14 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         console.log(data);
 
         if (data.status === 'success') {
-            
-            // Armazena token no localStorage
-            localStorage.setItem('token', data.token);
+            const token = data.token;
 
-            // Redireciona o usuário
+            // Armazena o token
+            localStorage.setItem('token', token);
+
+            localStorage.setItem('carrinho', data.id_carrinho);
+
+            // Redireciona
             window.location.href = '../../index.html';
         } else {
             alert(data.message);
