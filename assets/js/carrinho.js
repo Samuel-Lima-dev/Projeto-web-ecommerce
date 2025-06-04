@@ -16,17 +16,17 @@ buscarProduto = (produtoId) => {
 }
 */
 
-qtdMenos = (produto) => {
+const qtdMenos = (produto) => {
     let novaQtd = parseInt(produto.quantidade) - 1;
     if (novaQtd <= 0) {
-        exclude(produto.produto_id);
+        confirmarExcluir(produto.produto_id);
         return false;
     }
     produto.quantidade = novaQtd;
     return true;
 }
 
-qtdMais = (produto) => {
+const qtdMais = (produto) => {
     let novaQtd = parseInt(produto.quantidade) + 1;
     const estoque = parseInt(produto.estoque);
     if (estoque < novaQtd) {
@@ -40,29 +40,35 @@ qtdMais = (produto) => {
 
 
 // Calcula o Valor total de cada item
-precoTotal = (item) => {
+const precoTotal = (item) => {
     const precoUnitario = parseFloat(item.preco_unitario);
     return precoUnitario * item.quantidade;
 }
 
 // Exclui item
-exclude = (produtoId) => {
+const confirmarExcluir = (produtoId) => {
     if (confirm('Deseja excluir o produto?')) {
-        const id_carrinho = parseInt(localStorage.getItem('carrinho'));
-        const id_produto = parseInt(produtoId);
-        fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=excluirItem', {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id_carrinho, id_produto})
-        })
-        .then(response => response.json())
+        excluir(produtoId) 
         .then(data => {if (data.status === 'success') {
             window.location.reload()
-        }})}
+        }});
+    }
 };
+
+const excluir = (produtoId) => {
+    const id_carrinho = parseInt(localStorage.getItem('carrinho'));
+    const id_produto = parseInt(produtoId);
+    return fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=excluirItem', {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id_carrinho, id_produto})
+    })
+    .then(response => response.json());
+};
+
 
 // Requisição para pegar os itens no carrinho
 fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=listarItemCarrinho', {
@@ -128,7 +134,7 @@ if (data.status === 'success') {
                     <a class="mais" data-produto="${item.produto_id}">
                         <i class="bx bx-plus"></i>
                     </a>
-                    <button class="excluirItem" onclick="exclude(${item.produto_id})">Excluir</button>
+                    <button class="excluirItem" onclick="confirmarExcluir(${item.produto_id})">Excluir</button>
                 </div>
                 <label class="preco_total">R$ ${precoTotal(item).toFixed(2)}</label>
             `;
@@ -184,74 +190,54 @@ if (data.status === 'success') {
         </div>
         `;
 
+        //Desabilita o botão finalizar
         const finalizar = finisherContainer.querySelector(".finalizar");
         finalizar.disabled = true;
         
-        const marker = document.querySelectorAll('.itemCheckbox');
-        const markAll = document.getElementById('selectAll')
-        const totaltext = document.getElementById('totalItens');
 
-        function atualizarTotal() {
+        const btnExcluir = finisherContainer.querySelector('.excluir');
+        btnExcluir.addEventListener('click', () => {
+            const idExcluir = [];
+            const lis = ul.children;
+            for (let i = 0; i < lis.length; i++) { //Verifica todos os itens de l1
+                const checkElem = lis[i].querySelector('.itemCheckbox');
+                if (checkElem.checked) {
+                    idExcluir.push(checkElem.getAttribute('data-produto'));
+                }
+            }
+            if (idExcluir.length && confirm('Deseja excluir o(s) produto(s) selecionado(s)?')) {
+                idExcluir.forEach(id_produto => excluir(id_produto));
+                window.location.reload()
+            } else {
+                return;
+            }
+        });
+            
+
+        const checkboxes = Array.from(ul.querySelectorAll('.itemCheckbox'));
+        const checkAll = finisherContainer.querySelector('#selectAll');
+
+        checkAll.addEventListener('change', function() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+                atualizarSelect()
+            });
+        });
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const allChecked = checkboxes.every(inputCheck => inputCheck.checked);
+                checkAll.checked = allChecked;
+                atualizarSelect();
+            });
+        });
+
+        const totaltext = document.getElementById('totalItens');
+        function atualizarSelect() {
             const totalMarcados = document.querySelectorAll('.itemCheckbox:checked').length;
             totaltext.textContent = totalMarcados;
         }
 
-        marker.forEach(cb => {
-            cb.addEventListener('change', atualizarTotal);
-        });
-
-        markAll.addEventListener('change', function () {
-            const marcar = this.checked;
-            checkboxes.forEach(cb => cb.checked = marcar);
-            atualizarTotal();
-        });
-        
-        const checkboxes = Array.from(ul.querySelectorAll('.itemCheckbox'));
-        const checkAll = finisherContainer.querySelector('#selectAll');
-
-        const btnExcluir = finisherContainer.querySelector('.excluir');
-                btnExcluir.addEventListener('click', () => {
-                    const paraExcluir = [];
-                    const idExcluir = [];
-                    const lis = ul.children;
-                    for (let i = 0; i < lis.length; i++) {
-                        const liElem = lis[i];
-                        const checkElem = liElem.querySelector('.itemCheckbox');
-                        if (checkElem.checked) {
-                            paraExcluir.push(liElem);
-                            idExcluir.push(checkElem.getAttribute('data-produto'));
-                            console.log(idExclude)
-                        }
-                    }
-                    if (confirm('Deseja excluir os produtos selecionados?')) {
-                        paraExcluir.forEach((li, idx) => {
-                            const id_carrinho = data.carrinho_id;
-                            const id_produto = idExcluir[idx];
-                            fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=excluirItem', {
-                            method: 'delete',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: {id_carrinho, id_produto}
-                        })});
-                        checkAll.checked = false;
-                    } else {
-                        return;
-                    }});
-            
-            
-            checkAll.addEventListener('change', function(event) {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = this.checked;
-                });
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const allChecked = checkboxes.every(inputCheck => inputCheck.checked);
-                    checkAll.checked = allChecked;
-                });
-            });
 
     } else {
         carrinhoContainer.innerHTML += `<p class="aviso_empty">Parece que seu carrinho está vazio. Adicione alguns itens!</p>`;
