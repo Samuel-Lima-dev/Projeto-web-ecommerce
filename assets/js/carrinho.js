@@ -184,7 +184,7 @@ if (data.status === 'success') {
         </div>
         `;
 
-        const finalizar = finisherContainer.getElementsByClassName("finalizar");
+        const finalizar = finisherContainer.querySelector(".finalizar");
         finalizar.disabled = true;
         
         const marker = document.querySelectorAll('.itemCheckbox');
