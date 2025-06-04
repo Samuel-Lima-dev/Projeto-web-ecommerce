@@ -1,16 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const termoBusca = urlParams.get("buscar");
+    
 
     if (termoBusca) {
         fetch(`http://localhost/ecommerce/api/index.php?controller=produto&action=buscarPorFiltro&descricao=${encodeURIComponent(termoBusca)}`)
             .then(res => res.json())
             .then(dados => {
                 const resultadoDiv = document.getElementById("resultados");
-                       function buscarProdutos() {
-            const descricao = document.getElementById('descricao').value;
-            const categoria = document.getElementById('categoria').value;
-            const fornecedor = document.getElementById('fornecedor').value;
+                
 
                 if (dados.length > 0) {
                     dados.forEach(produto => {

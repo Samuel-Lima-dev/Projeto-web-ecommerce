@@ -1,6 +1,13 @@
 // Confere se o usuário está logado, se não, redireciona para tela de login
 const token = localStorage.getItem('token');
 if (!token) {
+<<<<<<< Updated upstream
+=======
+ HEAD
+>>>>>>> Stashed changes
+    window.location.href = '../pages/accounts/login.html'; // redireciona se não estiver logado
+}
+
     window.location.href = '../pages/accounts/login.html';
 }
 

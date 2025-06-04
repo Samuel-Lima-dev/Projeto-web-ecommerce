@@ -1,0 +1,107 @@
+API de E-commerce – Documentação
+
+Autenticação:
+
+Criar Conta
+- POST `/index.php?controller=usuario&action=criarConta`
+- **Body JSON**:
+{
+  "nome": "João",
+  "email": "joao@email.com",
+  "senha": "123456",
+  "cpf": "12345678901"
+}
+
+Login:
+- POST`/index.php?controller=usuario&action=login`
+- **Body JSON**:
+{
+  "email": "joao@email.com",
+  "senha": "123456"
+}
+- **Resposta**:
+{
+  "status": "success",
+  "token": "jwt_token_aqui",
+  "id_carrinho": 1
+}
+
+Carrinho:
+
+Requer token JWT no header:
+Authorization: Bearer <seu_token>
+
+Listar Itens do Carrinho:
+- GET`/index.php?controller=carrinho&action=listarItemCarrinho`
+
+Adicionar Item ao Carrinho
+- POST`/index.php?controller=carrinho&action=adicionarItem`
+- Body JSON:
+{
+  "id_produto": 2,
+  "id_carrinho": 1,
+  "quantidade": 3,
+  "preco": 29.90
+}
+
+Excluir Item do Carrinho
+- DELETE`/index.php?controller=carrinho&action=excluirItem`
+- **Body JSON**:
+{
+  "id_carrinho": 1,
+  "id_produto": 2
+}
+
+Produtos:
+
+Listar Todos os Produtos
+- GET `/index.php?controller=produto&action=listar`
+
+Buscar Produto por ID
+- GET`/index.php?controller=produto&action=buscarPorId&id=2`
+
+Buscar Produto com Filtros
+- POST`/index.php?controller=produto&action=buscarPorFiltro`
+- **Body JSON**:
+{
+  "descricao": "cadeira",
+  "categoria": "móveis",
+  "fornecedor": "madeira-madeira"
+}
+
+Cadastrar Produto
+- POST`/index.php?controller=produto&action=registrarProduto`
+- **Body JSON**:
+{
+  "descricao": "tinta",
+  "preco": 49.90,
+  "estoque": 20,
+  "categoria_id": 1,
+  "fornecedor_id": 1
+}
+
+Editar Produto
+- PUT `/index.php?controller=produto&action=editarProduto`
+- **Body JSON**:
+{
+  "id": 2,
+  "descricao": "torneira",
+  "preco": 54.90,
+  "estoque": 18,
+  "status_produto": "ativo",
+  "categoria_id": 1,
+  "fornecedor_id": 1
+}
+
+Excluir Produto
+- DELETE `/index.php?controller=produto&action=excluir`
+- **Body JSON**:
+{
+  "id": 2
+}
+
+
+- Todas as rotas utilizam o padrão `index.php?controller=...&action=...`
+- O token JWT é obrigatório em rotas de carrinho
+- A autenticação usa o header Authorization: Bearer
+- O retorno padrão é em JSON com chaves como status, message, data ou itens
