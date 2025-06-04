@@ -233,9 +233,10 @@ if (data.status === 'success') {
         });
 
         const totaltext = document.getElementById('totalItens');
-        function atualizarSelect() {
+        atualizarSelect = () => {
             const totalMarcados = document.querySelectorAll('.itemCheckbox:checked').length;
             totaltext.textContent = totalMarcados;
+            finalizar.disabled = !Boolean(totalMarcados);
         }
 
 
