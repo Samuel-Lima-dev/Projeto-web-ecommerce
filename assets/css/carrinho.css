@@ -244,6 +244,11 @@ body {
   font-size: 0.9rem;
 }
 
+.carrinho_item .quantidade .excluirItem {
+  background-color: var(--cor-secundaria);
+  border: 2px var(--cor-primaria);
+}
+
 .carrinho_item .preco_total {
   justify-self: center;
   align-self: center;
@@ -294,19 +299,6 @@ body {
 .finisher .preco_final .total .preco {
   font-size: 1.3rem;
   margin-left: 10px;
-  color: var(--cor-primaria);
-}
-
-.finisher .preco_final .eco {
-  justify-self: end;
-}
-
-.finisher .preco_final .eco .texto {
-  font-size: 0.9rem;
-}
-
-.finisher .preco_final .eco .preco {
-  font-size: 0.9rem;
   color: var(--cor-primaria);
 }
 

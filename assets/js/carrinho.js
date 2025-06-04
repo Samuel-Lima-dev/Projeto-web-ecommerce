@@ -4,8 +4,7 @@ if (!token) {
  HEAD
     window.location.href = '../pages/accounts/login.html'; // redireciona se não estiver logado
 }
-
-/*
+// Guarda lista de produtos do recebida do fetch
 let listaProdutos = undefined;
 
 buscarProduto = (produtoId) => {
@@ -14,9 +13,9 @@ buscarProduto = (produtoId) => {
     }
     return undefined
 }
-*/
 
-const qtdMenos = (produto) => {
+
+const reduzirQuantidade = (produto) => {
     let novaQtd = parseInt(produto.quantidade) - 1;
     if (novaQtd <= 0) {
         confirmarExcluir(produto.produto_id);
@@ -26,7 +25,7 @@ const qtdMenos = (produto) => {
     return true;
 }
 
-const qtdMais = (produto) => {
+const acrecentarQuantidade = (produto) => {
     let novaQtd = parseInt(produto.quantidade) + 1;
     const estoque = parseInt(produto.estoque);
     if (estoque < novaQtd) {
@@ -37,15 +36,11 @@ const qtdMais = (produto) => {
     return true;
 }
 
-
-
-// Calcula o Valor total de cada item
-const precoTotal = (item) => {
+const calcularValorTotal = (item) => {
     const precoUnitario = parseFloat(item.preco_unitario);
     return precoUnitario * item.quantidade;
 }
 
-// Exclui item
 const confirmarExcluir = (produtoId) => {
     if (confirm('Deseja excluir o produto?')) {
         excluir(produtoId) 
@@ -82,14 +77,14 @@ fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=lista
 .then(data => {
 if (data.status === 'success') {
 
+    const categoriasContainer = document.getElementById('categorias');
     const carrinhoContainer = document.getElementById('carrinho');
     const finisherContainer = document.getElementById('finisher');
-    const categoriasContainer = document.getElementById('categorias');
     const ul = document.createElement('ul');
 
     // Laço que coloca um li em tela para cada item no carrinho
     if (Array.isArray(data.itens) && data.itens.length > 0) {
-        // listaProdutos = data.itens;
+        listaProdutos = data.itens;
 
         data.itens.forEach(item => {
             const li = document.createElement('li');
@@ -127,6 +122,7 @@ if (data.status === 'success') {
                     <label class="preco_promo">R$ ${precoUnitario.toFixed(2)}</label>
                 </div>
                 <div class="quantidade">
+                    <button class="excluirItem" onclick="confirmarExcluir(${item.produto_id})">Excluir</button>
                     <a class="menos" data-produto="${item.produto_id}">
                         <i class="bx bx-minus"></i>
                     </a>
@@ -134,11 +130,11 @@ if (data.status === 'success') {
                     <a class="mais" data-produto="${item.produto_id}">
                         <i class="bx bx-plus"></i>
                     </a>
-                    <button class="excluirItem" onclick="confirmarExcluir(${item.produto_id})">Excluir</button>
                 </div>
-                <label class="preco_total">R$ ${precoTotal(item).toFixed(2)}</label>
+                <label class="preco_total">R$ ${calcularValorTotal(item).toFixed(2)}</label>
             `;
 
+            // Evento de manipulação  quantidade do item
             const ev = new CustomEvent('manipulate', { bubbles: true, detail: item});
             
             const lblPrecoTotal = li.querySelector("label.preco_total");
@@ -146,19 +142,20 @@ if (data.status === 'success') {
             li.addEventListener('manipulate', (event) => {
                 const evItem = event.detail;
                 lblQtd.innerHTML = `${evItem.quantidade}`;
-                lblPrecoTotal.innerHTML = `R$ ${precoTotal(evItem).toFixed(2)}`;
+                lblPrecoTotal.innerHTML = `R$ ${calcularValorTotal(evItem).toFixed(2)}`;
+                atualizarSelect();
             });
-                
+
             const aMenos = li.querySelector(".quantidade .menos");
             aMenos.addEventListener('click', () => {
-                if (qtdMenos(item)) {
+                if (reduzirQuantidade(item)) {
                     li.dispatchEvent(ev);
                 }
             });
 
             const aMais = li.querySelector(".quantidade .mais");
             aMais.addEventListener('click', () => {
-                if (qtdMais(item)) {
+                if (acrecentarQuantidade(item)) {
                     li.dispatchEvent(ev);
                 }
             });
@@ -179,18 +176,14 @@ if (data.status === 'success') {
             <div class="preco_final">
                 <div class="total">
                     <label class="texto">Total (<span id="totalItens">0</span> itens):</label>
-                    <label class="preco">{Preço Final}</label>
-                </div>
-                <div class="eco">
-                    <label class="texto">Economizou:</label>
-                    <label class="preco">{Quantidade Eco}</label>
+                    <label class="preco">R$ 0,00</label>
                 </div>
             </div>
             <input type="button" class="finalizar" value="Continuar">
         </div>
         `;
 
-        //Desabilita o botão finalizar
+        // Desabilita o botão finalizar
         const finalizar = finisherContainer.querySelector(".finalizar");
         finalizar.disabled = true;
         
@@ -199,7 +192,7 @@ if (data.status === 'success') {
         btnExcluir.addEventListener('click', () => {
             const idExcluir = [];
             const lis = ul.children;
-            for (let i = 0; i < lis.length; i++) { //Verifica todos os itens de l1
+            for (let i = 0; i < lis.length; i++) { // Verifica todos os itens de l1
                 const checkElem = lis[i].querySelector('.itemCheckbox');
                 if (checkElem.checked) {
                     idExcluir.push(checkElem.getAttribute('data-produto'));
@@ -207,20 +200,21 @@ if (data.status === 'success') {
             }
             if (idExcluir.length && confirm('Deseja excluir o(s) produto(s) selecionado(s)?')) {
                 idExcluir.forEach(id_produto => excluir(id_produto));
-                window.location.reload()
+                window.location.reload();
             } else {
                 return;
             }
         });
             
 
+        // Controle de checkboxes e totalizadores
         const checkboxes = Array.from(ul.querySelectorAll('.itemCheckbox'));
         const checkAll = finisherContainer.querySelector('#selectAll');
 
         checkAll.addEventListener('change', function() {
             checkboxes.forEach(checkbox => {
                 checkbox.checked = this.checked;
-                atualizarSelect()
+                atualizarSelect();
             });
         });
 
@@ -232,10 +226,19 @@ if (data.status === 'success') {
             });
         });
 
-        const totaltext = document.getElementById('totalItens');
+        
+        const spanQuantidadeSelecionado = finisherContainer.querySelector('#totalItens');
+        const lblPrecoTotal = finisherContainer.querySelector('.total .preco');
         atualizarSelect = () => {
-            const totalMarcados = document.querySelectorAll('.itemCheckbox:checked').length;
-            totaltext.textContent = totalMarcados;
+            const itensMarcados = Array.from(ul.querySelectorAll('.itemCheckbox:checked'));
+
+            const ValorTotal = itensMarcados
+                .map(checkElem => buscarProduto(checkElem.getAttribute('data-produto')))
+                .reduce((total, produto) => total + calcularValorTotal(produto), 0)
+
+            const totalMarcados = itensMarcados.length;
+            spanQuantidadeSelecionado.textContent = totalMarcados;
+            lblPrecoTotal.textContent = 'R$ ' + ValorTotal.toFixed(2);
             finalizar.disabled = !Boolean(totalMarcados);
         }
 
