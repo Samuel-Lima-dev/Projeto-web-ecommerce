@@ -16,7 +16,7 @@
             <div class="conteiner_head">
                 <div class="logo_home">
                     <a href="../index.html">
-                        <img src="/assets/img/logo.png" alt="Home Center logo">
+                        <img src="../assets/img/logo.png" alt="Home Center logo">
                         Home Center
                         <label class="texto">Carrinho</label>
                     </a>
@@ -39,35 +39,11 @@
     </header>
     
     <main>
-    <!-- Categorias da lista -->    
-        <div class="lista_categorias">
-            <label class="produto">Produtos</label>
-            <label class="preco-unitario">Preço Unitário</label>
-            <label class="quantidade">Quantidade</label>
-            <label class="preco-total">Preço total</label>
-        </div>
+        <div id="categorias"></div>
 
-    <!-- Itens da lista --> 
         <div id="carrinho"></div>
-    <!-- Finalização -->
-        <div class="finisher">
-            <label class="select_all"> 
-                <input type="checkbox">
-                Selecionar Tudo (N)
-            </label>
-            <input type="button" class="excluir" value="Excluir">
-            <div class="preco_final">
-                <div class="total">
-                    <label class="texto">Total (X itens):</label>
-                    <label class="preco">{Preço Final}</label>
-                </div>
-                <div class="eco">
-                    <label class="texto">Economizou:</label>
-                    <label class="preco">{Quantidade Eco}</label>
-                </div>
-            </div>
-            <input type="button" class="finalizar" value="Continuar">
-        </div>
+
+        <div id="finisher"></div>
     </main>
 
     <script src="../assets/js/carrinho.js"></script>

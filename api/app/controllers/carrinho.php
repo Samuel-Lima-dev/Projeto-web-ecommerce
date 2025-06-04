@@ -138,7 +138,7 @@ class CarrinhoController{
     public function excluirItem(){
         header('Content-Type: application/json');
 
-        if($_SERVER['REQUEST_METHOD'] !== 'delete' ){
+        if($_SERVER['REQUEST_METHOD'] !== 'DELETE' ){
             http_response_code(405);
             echo json_encode([
                 'status'=>'Error',
