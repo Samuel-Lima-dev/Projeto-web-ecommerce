@@ -1,7 +1,7 @@
 // Confere se o usuário está logado, se não, redireciona para tela de login
 const token = localStorage.getItem('token');
 if (!token) {
- HEAD
+ 
     window.location.href = '../pages/accounts/login.html'; // redireciona se não estiver logado
 }
 // Guarda lista de produtos do recebida do fetch
@@ -51,7 +51,6 @@ const confirmarExcluir = (produtoId) => {
 };
 
 const excluir = (produtoId) => {
-    const id_carrinho = parseInt(localStorage.getItem('carrinho'));
     const id_produto = parseInt(produtoId);
     return fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=excluirItem', {
         method: 'DELETE',
@@ -59,7 +58,7 @@ const excluir = (produtoId) => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({id_carrinho, id_produto})
+        body: JSON.stringify({id_produto})
     })
     .then(response => response.json());
 };

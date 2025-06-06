@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/carrinhos.php';
+require_once __DIR__ . '/../auth/JwtService.php';
+use Autenticacao\JwtService;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -15,35 +17,18 @@ class CarrinhoController{
     public function listarItemCarrinho(){
         header('Content-Type: application/json');
 
-        // Obter Authorization header corretamente
-        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-
-        if (!$authHeader && function_exists('getallheaders')) {
-            $headers = getallheaders();
-            $authHeader = $headers['Authorization'] ?? '';
-        }
-
-
-        if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            echo json_encode(['status' => 'error', 'message' => 'Token não enviado']);
-            return;
-        }
-
-        $jwt = $matches[1];
-
         try {
-            $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+            $auth = JwtService::autenticar();
+            $usuarioId = $auth['usuarioId'];
+            $carrinhoId = $auth['carrinhoId'];
 
-            $usuarioId = $decoded->id;
-            $carrinhoId = $decoded->carrinho;
-
-            // Buscar carrinho do usuário
             $carrinho = $this->carrinhoModel->buscarCarrinho($usuarioId);
 
-            if(!$carrinho){
+            if (!$carrinho) {
                 echo json_encode(['status' => 'error', 'message' => 'Carrinho não encontrado']);
                 return;
             }
+
 
             $itens = $this->carrinhoModel->listarItensCarrinho($carrinho['id']);
 
@@ -67,113 +52,116 @@ class CarrinhoController{
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        try {
+            
+            $auth = \Autenticacao\JwtService::autenticar();
 
-        // Validação dos dados
-        if (!isset($data['id_produto'], $data['id_carrinho'], $data['quantidade'], $data['preco'])) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Parâmetros inválidos.'
-            ]);
-            exit();
-        }
+            $usuarioId = $auth['usuarioId'];
 
-        $id_produto = (int) $data['id_produto'];
-        $id_carrinho = (int) $data['id_carrinho'];
-        $quantidade = (int) $data['quantidade'];
-        $preco = (float) $data['preco'];
+            // Buscar carrinho do usuário
+            $carrinho = $this->carrinhoModel->buscarCarrinho($usuarioId);
+            if (!$carrinho) {
+                echo json_encode(['status' => 'error', 'message' => 'Carrinho não encontrado']);
+                return;
+            }
 
-        // Verifica se o item já existe no carrinho
-        $item = $this->carrinhoModel->buscarItemCarrinho($id_carrinho, $id_produto);
-
-        if (!$item) {
-            // Item novo
-            $novoItem = $this->carrinhoModel->adicionarItemCarrinho($id_carrinho, $id_produto, $quantidade, $preco);
-
-            if ($novoItem) {
+            // Validação dos dados
+            if (!isset($data['id_produto'], $data['quantidade'], $data['preco'])) {
                 echo json_encode([
-                    'status' => 'success',
-                    'message' => 'Item adicionado com sucesso'
+                    'status' => 'error',
+                    'message' => 'Parâmetros inválidos.'
+                ]);
+                return;
+            }
+
+            $id_produto = (int) $data['id_produto'];
+            $id_carrinho = (int)$carrinho['id']; // **Não vem do cliente**
+            $quantidade = (int) $data['quantidade'];
+            $preco = (float) $data['preco'];
+
+            // Verifica se o item já existe no carrinho
+            $item = $this->carrinhoModel->buscarItemCarrinho($id_carrinho, $id_produto);
+        
+            if (!$item) {
+                $novoItem = $this->carrinhoModel->adicionarItemCarrinho($id_carrinho, $id_produto, $quantidade, $preco);
+
+                echo json_encode([
+                    'status' => $novoItem ? 'success' : 'error',
+                    'message' => $novoItem ? 'Item adicionado com sucesso' : 'Erro ao adicionar item'
                 ]);
             } else {
+                $nova_quantidade = (int)$item['quantidade'] + $quantidade;
+
+                if ($nova_quantidade <= 0) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Quantidade inválida.'
+                    ]);
+                    return;
+                }
+
+                $novo_preco = $preco * $nova_quantidade; 
+
+                $atualizado = $this->carrinhoModel->atualizarItemCarrinho($id_carrinho, $id_produto, $nova_quantidade, $novo_preco);
+
                 echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Erro ao adicionar item'
+                    'status' => $atualizado ? 'success' : 'error',
+                    'message' => $atualizado ? 'Item atualizado com sucesso' : 'Erro ao atualizar item'
                 ]);
             }
-
-        } else {
-            // Item já existe – atualizar quantidade e preço
-            $nova_quantidade = $item['quantidade'] + $quantidade;
-
-            if ($nova_quantidade <= 0) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Quantidade inválida.'
-                ]);
-                exit();
-            }
-
-            $novo_preco = $item['preco_unitario'] * $nova_quantidade;
-
-            $atualizado = $this->carrinhoModel->atualizarItemCarrinho($id_carrinho, $id_produto, $nova_quantidade, $novo_preco);
-
-            if ($atualizado) {
-                echo json_encode([
-                    'status' => 'success',
-                    'message' => 'Item atualizado com sucesso'
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Erro ao atualizar item'
-                ]);
-            }
+        } catch (Exception $e) {
+            http_response_code(401);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
-
-    exit();
 }
+
 
 
     public function excluirItem(){
         header('Content-Type: application/json');
 
-        if($_SERVER['REQUEST_METHOD'] !== 'DELETE' ){
+        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
             http_response_code(405);
             echo json_encode([
-                'status'=>'Error',
-                'messege'=>'Método não permitido'
+                'status' => 'error',
+                'message' => 'Método não permitido'
             ]);
             return;
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $id_carrinho = (int)$data['id_carrinho'] ?? '';
-        $id_produto = (int)$data['id_produto'] ?? '';
-        
-        if(!$id_carrinho || !$id_produto){
+        try {
+            $auth = \Autenticacao\JwtService::autenticar();
+
+            $usuarioId = $auth['usuarioId'];
+
+            $carrinho = $this->carrinhoModel->buscarCarrinho($usuarioId);
+            if (!$carrinho) {
+                echo json_encode(['status' => 'error', 'message' => 'Carrinho não encontrado']);
+                return;
+            }
+
+            $id_produto = (int) ($data['id_produto'] ?? 0);
+            $id_carrinho = $carrinho['id'];
+
+            if (!$id_produto) {
+                echo json_encode(['status' => 'error', 'message' => 'ID do produto não informado']);
+                return;
+            }
+
+            $item = $this->carrinhoModel->excluirItemCarrinho($id_carrinho, $id_produto);
+
             echo json_encode([
-                'status' => 'error', 
-                'message' => 'ID não informado'
-            
+                'status' => $item ? 'success' : 'error',
+                'message' => $item ? 'Item excluído com sucesso' : 'Erro ao excluir item'
             ]);
-            return;
+        } catch (Exception $e) {
+            http_response_code(401);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        
-        $item = $this->carrinhoModel->excluirItemCarrinho($id_carrinho, $id_produto);
-
-        if ($item) {
-            echo json_encode([
-                'status' => 'success', 
-                'message' => 'Item excluído com sucesso']);
-        } else {
-            echo json_encode([
-                'status' => 'error', 
-                'message' => 'Erro ao excluir Item']);
-        }
-        exit();
     }
-}
 
+}
 ?>

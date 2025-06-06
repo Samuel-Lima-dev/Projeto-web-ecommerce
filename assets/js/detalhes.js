@@ -58,24 +58,16 @@ if (!produtoId) {
 // Função para adicionar ao carrinho e redirecionar
 function adicionarAoCarrinho(id_produto, quantidade, preco) {
 
-    const id_carrinho = localStorage.getItem('carrinho');
-    console.log("id_carrinho:", id_carrinho);
-
-
-    if (!id_carrinho) {
-        alert("Carrinho não encontrado. Faça login novamente.");
-        return;
-    }
-    
+    const token = localStorage.getItem('token');
 
     fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=adicionarItem', {
         method: 'POST',
         headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             id_produto,
-            id_carrinho: parseInt(id_carrinho),
             quantidade: 1,
             preco
         })

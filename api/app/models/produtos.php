@@ -14,7 +14,7 @@ class Produto{
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     }
 
-    // Buscar todos os prosutos da tabela
+    // Buscar todos os produtos da tabela
     public function buscarTodos(){
         $stmt = $this->conn->query("SELECT * FROM Produtos");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
