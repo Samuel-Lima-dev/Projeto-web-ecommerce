@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/carrinho.css">
-    <title>Document</title>
+    <title>Home Center - Carrinho</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
@@ -22,23 +22,32 @@
                     </a>
                 </div>
                 
-                <div class="form-search">
-                    <input type="text" placeholder="O que você procura?">
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </div>
+                    <form action="pages/busca.html" class="form-search" method="GET">
+                        <input type="text" name="buscar" placeholder="O que você procura?">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
             
             
                 <div class="user-options">
-                    <div>
-                        <a href="accounts/login.html">
-                            <img src="../assets/img/logo login (2).png" alt="Login" class="icon"></a>
+                    <div class="user-menu-container">
+                        <a href="accounts/login.html" id="login-link">
+                            <img src="../assets/img/logo login (2).png" alt="Login" class="icon" />
+                            <div id="user-firstname" class="user-name"></div>
+                        </a>
+
+                        <!-- Dropdown -->
+                        <div id="user-dropdown" class="dropdown-menu">
+                        <p id="dropdown-nome"></p>
+                        <p id="dropdown-email"></p>
+                        <button onclick="logout()" id="logout-btn">Sair</button>
+                        </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </header>
     
-    <main>
+    <main class="main_container">
         <div id="categorias"></div>
 
         <div id="carrinho"></div>

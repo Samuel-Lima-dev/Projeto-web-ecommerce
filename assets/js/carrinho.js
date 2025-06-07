@@ -63,6 +63,62 @@ const excluir = (produtoId) => {
     .then(response => response.json());
 };
 
+    // login 
+
+function exibirNomeUsuario() {
+const token = localStorage.getItem('token');
+
+    if (token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const nomeCompleto = payload.user_name;
+            const email = payload.email;
+
+            const primeiroNome = nomeCompleto.split(" ")[0];
+
+            // Mostra primeiro nome abaixo do ícone
+            document.getElementById('user-firstname').textContent = primeiroNome;
+
+            // Preenche dropdown
+            document.getElementById('dropdown-nome').textContent = nomeCompleto;
+            document.getElementById('dropdown-email').textContent = email;
+
+            // Troca comportamento do link só se estiver logado
+            const loginLink = document.getElementById("login-link");
+            loginLink.addEventListener("click", function (e) {
+                e.preventDefault(); // impede redirecionamento
+                toggleDropdown(e);
+            });
+
+        } catch (e) {
+            console.error("Token inválido:", e);
+            logout(); // força logout
+        }
+    }
+}
+
+function toggleDropdown(event) {
+    const menu = document.getElementById("user-dropdown");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('carrinho');
+    window.location.reload();
+}
+
+exibirNomeUsuario();
+
+// Fecha o menu se clicar fora
+document.addEventListener("click", function (e) {
+    const dropdown = document.getElementById("user-dropdown");
+    const userLink = document.getElementById("login-link");
+    if (!userLink.contains(e.target)) {
+        dropdown.style.display = "none";
+    }
+});
 
 // Requisição para pegar os itens no carrinho
 fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=listarItemCarrinho', {
@@ -98,7 +154,8 @@ if (data.status === 'success') {
             // Adiciona as categorias à tela
             categoriasContainer.innerHTML = `
             <div class="lista_categorias">
-                <label class="produto">Produtos</label>
+                <label class="nada1">Nada</label>
+                <label class="produto">Produto</label>
                 <label class="preco-unitario">Preço Unitário</label>
                 <label class="quantidade">Quantidade</label>
                 <label class="preco-total">Preço total</label>
@@ -110,16 +167,9 @@ if (data.status === 'success') {
                 <label class="marker"> 
                     <input type="checkbox" class="itemCheckbox" data-produto="${item.produto_id}">
                 </label>
-                <div class="imagem">
                     <img src="${imagemPath}" class="img">
-                    <label class="promo_desc">${item.status_produto === 'promo' ? 'Promoção' : ''}</label>
-                </div>
-                <div class="item_name">
-                    <label class="descricao">${item.descricao}</label>
-                </div>
-                <div class="preco_uni">
-                    <label class="preco_promo">R$ ${precoUnitario.toFixed(2)}</label>
-                </div>
+                    <label class="nome">${item.descricao}</label>
+                    <label class="preco_unitario">R$ ${precoUnitario.toFixed(2)}</label>
                 <div class="quantidade">
                     <button class="excluirItem" onclick="confirmarExcluir(${item.produto_id})">Excluir</button>
                     <a class="menos" data-produto="${item.produto_id}">
@@ -173,10 +223,8 @@ if (data.status === 'success') {
             </label>
             <input type="button" class="excluir" value="Excluir">
             <div class="preco_final">
-                <div class="total">
                     <label class="texto">Total (<span id="totalItens">0</span> itens):</label>
                     <label class="preco">R$ 0,00</label>
-                </div>
             </div>
             <input type="button" class="finalizar" value="Continuar">
         </div>
@@ -227,7 +275,7 @@ if (data.status === 'success') {
 
         
         const spanQuantidadeSelecionado = finisherContainer.querySelector('#totalItens');
-        const lblPrecoTotal = finisherContainer.querySelector('.total .preco');
+        const lblPrecoTotal = finisherContainer.querySelector('.preco_final .preco');
         atualizarSelect = () => {
             const itensMarcados = Array.from(ul.querySelectorAll('.itemCheckbox:checked'));
 
