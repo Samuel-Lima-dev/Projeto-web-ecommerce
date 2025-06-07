@@ -33,23 +33,35 @@
             
             
                 <div class="user-options">
-                        <a href="pages/accounts/login.html">
-                            <img src="assets/img/logo login (2).png" alt="Login" class="icon">
+                    <div class="user-menu-container">
+                        <a href="pages/accounts/login.html" id="login-link">
+                            <img src="assets/img/logo login (2).png" alt="Login" class="icon" />
+                            <div id="user-firstname" class="user-name"></div>
                         </a>
-                        <button onclick="logout()">Sair</button>
-                        <a href="pages/carrinho.html">
-                            <img src="assets/img/sacola.png" alt="Carrinho" class="icon">
-                        </a>
-                </div>
+
+                        <!-- Dropdown -->
+                        <div id="user-dropdown" class="dropdown-menu">
+                        <p id="dropdown-nome"></p>
+                        <p id="dropdown-email"></p>
+                        <button onclick="logout()" id="logout-btn">Sair</button>
+                        </div>
+                    </div>
+
+                    <a href="pages/carrinho.html">
+                        <img src="assets/img/sacola.png" alt="Carrinho" class="icon" />
+                    </a>
+                 </div>
+
+
 
             </div>
         </div>
     </header>
                 <nav>
                     <ul>
-                      <li><a href="#categoria-acesbanheirosgabinetes">Acessórios de Banheiro</a></li>
-                      <li><a href="#categoria-eletro">Eletrodomésticos</a></li>
-                      <li><a href="#categoria-balcaodeferrametas">Ferramentas</a></li>
+                      <li><a href="#categoria-acesbanheirosgabinetes">Ultilidades Para Banheiro</a></li>
+                      <li><a href="#categoria-eletrica">Elétrica</a></li>
+                      <li><a href="#categoria-balcaodeferramentas">Ferramentas</a></li>
                       <li><a href="#categoria-automotivo">Automotivo</a></li>
                     </ul>
                   </nav>
@@ -57,23 +69,24 @@
 
     <!-- Banner com autoplay -->
 
-     <div class="carousel">
+    <div class="carousel">
        <div class="slides">
-         <div class="slide ativo">
-            <a href="falso.html"> <!-- Link de pg que clicando na imageem vai -->
-                <img src="assets/img/bannercons1.png" alt="Slide 1">
+        <div class="slide ativo">
+            <a href="categoria.html?categoria=automotivo"> <!-- Link de pg que clicando na imageem vai -->
+                <img src="assets/img/banner 2.png" alt="Produtos automotivos - banner promocional">
             </a>
          </div>
-         <div class="slide">
-            <a href="falso.html">
-           <img src="assets/img/banner3.jpg" alt="Slide 2">
+        <div class="slide">
+            <a href="categoria.html?categoria=LUSTRES%20E%20LUMINARIAS">
+                <img src="assets/img/banner 3.png" alt="Produtos iluminação - banner promocional">
+           </a> 
+          </div>
+        <div class="slide">
+            <a href="categoria.html?categoria=moveisdecoracoes">
+                <img src="assets/img/banner 4.png" alt="Produtos decorações - banner promocional">
             </a>
          </div>
-         <div class="slide">
-            
-           <img src="assets/img/Captura110448.png" alt="Slide 3">
-         </div>
-       </div>
+     </div>
      
        <button class="btn anterior" onclick="voltarSlide()">  
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
@@ -95,30 +108,31 @@
      </div>
 
      <div class="categorias-container">
-        <a href="pages/accounts/cozinha.html" class="categoria-item">
+        <a href="categoria.html?categoria=Cozinha" class="categoria-item">
             <img src="assets/img/cozinha.webp" alt="Cozinha">
             <p>Cozinha</p>
         </a>
       
-        <a href="pages/accounts/banheiro.html" class="categoria-item">
-            <img src="assets/img/banheiro.jpg" alt="Banheiro">
+        <a href="categoria.html?categoria=banheiro" class="categoria-item">
+            <img src="assets/img/banheiro.webp" alt="Banheiro">
             <p>Banheiro</p>
         </a>
       
-        <a href="sala.html" class="categoria-item">
-            <img src="assets/img/cozinha.webp" alt="Construção">
-            <p>construção</p>
+        <a href="categoria.html?categoria=Sala" class="categoria-item">
+            <img src="assets/img/sala.webp" alt="Sala de Estar">
+            <p>Sala de Estar</p>
         </a>
 
-        <a href="carro.html"class="categoria-item">
-            <img src="assets/img/quarto.webp" alt="Carro">
-            <p>Carrro</p>
+        <a href="categoria.html?categoria=Quarto"class="categoria-item">
+            <img src="assets/img/quarto.webp" alt="Quarto">
+            <p>Quarto</p>
          </a>
       </div>
       
 
       <!-- Para Selecionar Categoria -->
-    
+
+        <div id="categoria-eletrodomesticos" class="categoria-produto"></div>
         <div id="categoria-moveisedecoracoes" class="categoria-produto"></div>
 
     <div class="info-bar">
@@ -127,7 +141,7 @@
         <p>descontos <strong>exclusivos online</strong></p>
     </div>
     <div class="info-item">
-        <img src="assets/img/Ícones iluminados em estilo neon.png" alt="Clique e Retire">
+        <img src="assets/img/retire.png" alt="Clique e Retire">
         <p>Clique <strong>e Retire</strong></p>
     </div>
     <div class="info-item">

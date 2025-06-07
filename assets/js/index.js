@@ -1,21 +1,16 @@
-const categorias = ['UTILIDADES PLASTICOS / CAMEBA', 'eletro', 'eletrica', 'ACES DE BANHEIROS / PIAS E GABINETES', 'ACES. BANHEIROS/CONEXÕES/GABINETES', 'ESQUADRIAS',
-    'LUSTRES E LUMINARIAS', 'MÓVEIS E DECORAÇÕES','PIAS E GABINETES','TINTAS E ACESSORIOS','automotivo','ACES. BANHEIROS/GABINETES','BALCAO DE FERRAMENTAS',
-    'LOUÇAS METAIS SANIT','UTILIDADES PLASTICOS E CAMEBA'];
+const categorias = [ 'eletrica', 'ESQUADRIAS',
+    'MÓVEIS E DECORAÇÕES','TINTAS E ACESSORIOS','automotivo','ACES. BANHEIROS/GABINETES','BALCAO DE FERRAMENTAS',
+    'LOUÇAS METAIS SANIT', 'Eletrodomésticos'];
 
 const nomesExibicao = {
-  'UTILIDADES PLASTICOS / CAMEBA': 'Linha De Banho',
-   eletro: 'Eletrodomésticos',
-  eletrica: 'Elétrica',
+   eletrica: 'Elétrica',
   automotivo: 'Automotivo',
-  'ACES DE BANHEIROS / PIAS E GABINETES': 'Acessórios para Banheiro',
-  'ACES. BANHEIROS/CONEXÕES/GABINETES': 'Banheiro',
+  
   ESQUADRIAS: 'Ferramentas e Acessórios',
-  'LOUÇAS METAIS SANIT': 'Acessórios',
-  'LUSTRES E LUMINARIAS': 'Iluminação',
+    'LOUÇAS METAIS SANIT': 'Acessórios',
   'MÓVEIS E DECORAÇÕES': 'Móveis e Decoração',
-  'PIAS E GABINETES': 'Gabinetes e Pias',
-  'TINTAS E ACESSORIOS': 'Tintas','BALCAO DE FERRAMENTAS': 'Ferramenta',
-  'ACES. BANHEIROS/GABINETES': 'Utilidades para Banheiro', 'UTILIDADES PLASTICOS E CAMEBA':'Utilidades', 'UTILIDADES DOMÉSTICAS PRESENTES': 'Podutos'
+  'TINTAS E ACESSORIOS': 'Tintas','BALCAO DE FERRAMENTAS': 'Ferramentas',
+  'ACES. BANHEIROS/GABINETES': 'Utilidades para Banheiro'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -139,4 +134,59 @@ produtos.slice(0,10).forEach(produto => {
         return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
 
+    // login 
 
+    function exibirNomeUsuario() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const nomeCompleto = payload.user_name;
+            const email = payload.email;
+
+            const primeiroNome = nomeCompleto.split(" ")[0];
+
+            // Mostra primeiro nome abaixo do ícone
+            document.getElementById('user-firstname').textContent = primeiroNome;
+
+            // Preenche dropdown
+            document.getElementById('dropdown-nome').textContent = nomeCompleto;
+            document.getElementById('dropdown-email').textContent = email;
+
+            // Troca comportamento do link só se estiver logado
+            const loginLink = document.getElementById("login-link");
+            loginLink.addEventListener("click", function (e) {
+                e.preventDefault(); // impede redirecionamento
+                toggleDropdown(e);
+            });
+
+        } catch (e) {
+            console.error("Token inválido:", e);
+            logout(); // força logout
+        }
+    }
+}
+
+function toggleDropdown(event) {
+    const menu = document.getElementById("user-dropdown");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('carrinho');
+    window.location.reload();
+}
+
+exibirNomeUsuario();
+
+// Fecha o menu se clicar fora
+document.addEventListener("click", function (e) {
+    const dropdown = document.getElementById("user-dropdown");
+    const userLink = document.getElementById("login-link");
+    if (!userLink.contains(e.target)) {
+        dropdown.style.display = "none";
+    }
+});

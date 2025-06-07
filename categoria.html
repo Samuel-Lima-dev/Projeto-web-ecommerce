@@ -33,35 +33,62 @@
             
             
                 <div class="user-options">
-                        <a href="pages/accounts/login.html">
-                            <img src="assets/img/logo login (2).png" alt="Login" class="icon">
+                    <div class="user-menu-container">
+                        <a href="pages/accounts/login.html" id="login-link">
+                            <img src="assets/img/logo login (2).png" alt="Login" class="icon" />
+                            <div id="user-firstname" class="user-name"></div>
                         </a>
-                        <button onclick="logout()">Sair</button>
-                        <a href="pages/carrinho.html">
-                            <img src="assets/img/sacola.png" alt="Carrinho" class="icon">
-                        </a>
-                </div>
+
+                        <!-- Dropdown -->
+                        <div id="user-dropdown" class="dropdown-menu">
+                        <p id="dropdown-nome"></p>
+                        <p id="dropdown-email"></p>
+                        <button onclick="logout()" id="logout-btn">Sair</button>
+                        </div>
+                    </div>
+
+                    <a href="pages/carrinho.html">
+                        <img src="assets/img/sacola.png" alt="Carrinho" class="icon" />
+                    </a>
+                 </div>
 
             </div>
         </div>
     </header>
-
-    <style>
-        /* Exemplo básico, pode ser adaptado */
+       <nav>
+                    <ul>
+                      <li><a href="/ecommerce/categoria.html?categoria=Quarto">Quarto</a></li>
+                      <li><a href="/ecommerce/categoria.html?categoria=Cozinha">Cozinha</a></li>
+                      <li><a href="/ecommerce/categoria.html?categoria=Sala">Sala de Estar</a></li>
+                      <li><a href="/ecommerce/categoria.html?categoria=banheiro">Banheiro</a></li>
+                    </ul>
+                  </nav>
+ <style>
         .lista-produtos {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;   
             gap: 20px;
+            width: 100%;              
+            padding: 20px;            
+            box-sizing: border-box;    
         }
+
         .produto {
             width: 200px;
             border: 1px solid #ccc;
             border-radius: 8px;
             padding: 10px;
             text-align: center;
+            background-color: #fff;
         }
+
         .produto img {
             max-width: 100%;
+            height: auto;
+        }
+        #titulo-categoria {
+        color: #FF5722;
         }
     </style>
 </head>
@@ -81,7 +108,9 @@
         'LUSTRES E LUMINARIAS': 'Iluminação',
         'MÓVEIS E DECORAÇÕES': 'Móveis e Decoração',
         'PIAS E GABINETES': 'Gabinetes e Pias',
-        'TINTAS E ACESSORIOS': 'Tintas'
+         Sala :'Sala de Estar' ,
+        'TINTAS E ACESSORIOS': 'Tintas',
+        banheiro : 'Banheiro'
         };
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -147,5 +176,7 @@
             container.appendChild(lista);
         }
     </script>
+
+ 
 </body>
 </html>

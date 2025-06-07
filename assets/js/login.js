@@ -14,15 +14,16 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         });
 
         const data = await response.json();
-        console.log(data);
 
         if (data.status === 'success') {
             const token = data.token;
-
             // Armazena o token
             localStorage.setItem('token', token);
 
             localStorage.setItem('carrinho', data.id_carrinho);
+            console.log("Carrinho ID recebido:", data.id_carrinho);
+   
+
 
             // Redireciona
             window.location.href = '../../index.html';
