@@ -79,7 +79,7 @@ produtos.slice(0,10).forEach(produto => {
 
      divProduto.innerHTML = `
         <a href="/ecommerce/pages/accounts/detalhes.html?id=${produto.id}" class="link-produto">
-             <img src="assets/img/teste.webp" alt="${produto.nome}">
+             <img src="${produto.caminho_imagem}" alt="${produto.nome}">
              <h3>${produto.descricao}</h3>
              <p>R$ ${Number(produto.preco).toFixed(2)}</p>
          </a>
