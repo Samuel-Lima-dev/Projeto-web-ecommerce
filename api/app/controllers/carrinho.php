@@ -75,13 +75,13 @@ class CarrinhoController{
             }
 
             $id_produto = (int) $data['id_produto'];
-            $id_carrinho = (int)$carrinho['id']; // **Não vem do cliente**
+            $id_carrinho = (int)$carrinho['id'];
             $quantidade = (int) $data['quantidade'];
             $preco = (float) $data['preco'];
 
             // Verifica se o item já existe no carrinho
             $item = $this->carrinhoModel->buscarItemCarrinho($id_carrinho, $id_produto);
-        
+
             if (!$item) {
                 $novoItem = $this->carrinhoModel->adicionarItemCarrinho($id_carrinho, $id_produto, $quantidade, $preco);
 
@@ -90,7 +90,7 @@ class CarrinhoController{
                     'message' => $novoItem ? 'Item adicionado com sucesso' : 'Erro ao adicionar item'
                 ]);
             } else {
-                $nova_quantidade = (int)$item['quantidade'] + $quantidade;
+                $nova_quantidade = (int)$item[0]['quantidade'] + $quantidade;
 
                 if ($nova_quantidade <= 0) {
                     echo json_encode([
@@ -115,8 +115,6 @@ class CarrinhoController{
         }
     }
 }
-
-
 
     public function excluirItem(){
         header('Content-Type: application/json');
@@ -163,5 +161,6 @@ class CarrinhoController{
         }
     }
 
+   
 }
 ?>

@@ -1,107 +1,126 @@
-API de E-commerce – Documentação
+
+Documentação da API - E-commerce
+
+Funcionalidades:
+
+- Gerenciamento de usuários
+- Gerenciamento de carrinho de compras
+- Processamento de pedidos e pagamentos
+
+Modelo de URL:
+index.php?controller={nome_do_controller}&action={nome_da_acao}
 
 Autenticação:
 
-Criar Conta
-- POST `/index.php?controller=usuario&action=criarConta`
-- **Body JSON**:
-{
-  "nome": "João",
-  "email": "joao@email.com",
-  "senha": "123456",
-  "cpf": "12345678901"
-}
+Método: JWT (JSON Web Token)
+Header obrigatório para chamadas autenticadas:
+Authorization: Bearer {seu_token}
 
-Login:
-- POST`/index.php?controller=usuario&action=login`
-- **Body JSON**:
+Endpoints
+
+Usuários:
+
+Criar Conta
+- POST index.php?controller=usuario&action=criarConta
+- Body (JSON):
 {
-  "email": "joao@email.com",
-  "senha": "123456"
+  "nome": "João Silva",
+  "email": "joao@example.com",
+  "senha": "senha123",
+  "cpf": "12345678900"
 }
-- **Resposta**:
+- Resposta (200):
 {
   "status": "success",
-  "token": "jwt_token_aqui",
-  "id_carrinho": 1
+  "message": "Conta criada com sucesso"
+}
+
+Login
+- POST index.php?controller=usuario&action=login
+- Body (JSON):
+{
+  "email": "joao@example.com",
+  "senha": "senha123"
+}
+- Resposta (200):
+{
+  "status": "success",
+  "token": "{JWT}"
 }
 
 Carrinho:
 
-Requer token JWT no header:
-Authorization: Bearer <seu_token>
-
 Listar Itens do Carrinho:
-- GET`/index.php?controller=carrinho&action=listarItemCarrinho`
+- GET index.php?controller=carrinho&action=listarItemCarrinho
+- Headers: Authorization: Bearer {JWT}
+- Resposta (200):
+{
+  "status": "success",
+  "carrinho_id": 5,
+  "itens": [
+    {
+      "produto_id": 1,
+      "quantidade": 2,
+      "preco": 59.9
+    }
+  ]
+}
 
 Adicionar Item ao Carrinho
-- POST`/index.php?controller=carrinho&action=adicionarItem`
-- Body JSON:
+- POST index.php?controller=carrinho&action=adicionarItem
+- Headers: Authorization: Bearer {JWT}
+- Body (JSON):
 {
-  "id_produto": 2,
-  "id_carrinho": 1,
-  "quantidade": 3,
-  "preco": 29.90
+  "id_produto": 1,
+  "quantidade": 2,
+  "preco": 59.90
+}
+- Resposta (200):
+{
+  "status": "success",
+  "message": "Item adicionado com sucesso"
 }
 
 Excluir Item do Carrinho
-- DELETE`/index.php?controller=carrinho&action=excluirItem`
-- **Body JSON**:
+- DELETE index.php?controller=carrinho&action=excluirItem
+- Headers: Authorization: Bearer {JWT}
+- Body (JSON):
 {
-  "id_carrinho": 1,
-  "id_produto": 2
+  "id_produto": 1
 }
-
-Produtos:
-
-Listar Todos os Produtos
-- GET `/index.php?controller=produto&action=listar`
-
-Buscar Produto por ID
-- GET`/index.php?controller=produto&action=buscarPorId&id=2`
-
-Buscar Produto com Filtros
-- POST`/index.php?controller=produto&action=buscarPorFiltro`
-- **Body JSON**:
+- Resposta (200):
 {
-  "descricao": "cadeira",
-  "categoria": "móveis",
-  "fornecedor": "madeira-madeira"
-}
-
-Cadastrar Produto
-- POST`/index.php?controller=produto&action=registrarProduto`
-- **Body JSON**:
-{
-  "descricao": "tinta",
-  "preco": 49.90,
-  "estoque": 20,
-  "categoria_id": 1,
-  "fornecedor_id": 1
-}
-
-Editar Produto
-- PUT `/index.php?controller=produto&action=editarProduto`
-- **Body JSON**:
-{
-  "id": 2,
-  "descricao": "torneira",
-  "preco": 54.90,
-  "estoque": 18,
-  "status_produto": "ativo",
-  "categoria_id": 1,
-  "fornecedor_id": 1
-}
-
-Excluir Produto
-- DELETE `/index.php?controller=produto&action=excluir`
-- **Body JSON**:
-{
-  "id": 2
+  "status": "success",
+  "message": "Item excluído com sucesso"
 }
 
 
-- Todas as rotas utilizam o padrão `index.php?controller=...&action=...`
-- O token JWT é obrigatório em rotas de carrinho
-- A autenticação usa o header Authorization: Bearer
-- O retorno padrão é em JSON com chaves como status, message, data ou itens
+Pedido
+
+Finalizar Compra (criar pedido)
+- POST index.php?controller=pedido&action=finalizarCompra
+- Headers: Authorization: Bearer {JWT}
+- Body (JSON):
+{
+  "itensSelecionados": [1, 2, 3]
+}
+- Resposta (200):
+{
+  "status": "success",
+  "message": "Pedido finalizado com sucesso",
+  "pedido_id": 42
+}
+
+Finalizar Pagamento
+- POST index.php?controller=pedido&action=finalizarPagamento
+- Headers: Authorization: Bearer {JWT}
+- Body (JSON):
+{
+  "pedido_id": 42,
+  "metodo": "cartao"
+}
+- Resposta (200):
+{
+  "status": "success",
+  "message": "Pagamento confirmado e pedido atualizado com sucesso."
+}
