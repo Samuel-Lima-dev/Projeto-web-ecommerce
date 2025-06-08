@@ -32,19 +32,34 @@ body {
 
 /* Cabeçalho */
 .main_conteiner_head {
-  background-color: var(--cor-secundaria);
+  background-color: #f5f5f5;
   padding: 10px 15px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .conteiner_head {
-  width: auto;
-  display: grid;
-  grid-template-columns: 35rem auto auto;
-  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.logo_home a {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #FF5722;
+  text-decoration: none;
+  font-weight: bold;
+  gap: 10px;
+}
+
+.logo_home label {
+  border-left: 1px solid var(--cor-primaria);
+  padding: 10px;
+
 }
 
 .logo_home img {
@@ -52,48 +67,35 @@ body {
   height: 50px;
 }
 
-.logo_home a {
-  display: flex;
-  align-items: center;
-  align-self: center;
-  font-size: 1.5rem;
-  color: #FF5722;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.logo_home .texto {
-  padding: 0.5rem;
-  margin-left: 0.7rem;
-  border-left: 1px solid var(--cor-primaria);
-  font-weight: 100;
-}
-
+/* Barra de Pesquisa */
 .form-search {
   display: flex;
-  width: 495px;
+  max-width: 595px;
+  width: 100%;
 }
 
 .form-search input {
   flex: 1;
   padding: 10px 15px;
-  border: 3px solid var(--cor-primaria);
-  border-right: 0;
+  border: 5px solid var(--cor-primaria);
+  border-right: none;
   border-radius: 20px 0 0 20px;
   outline: none;
-  color: var(--cor-primaria);
+  background-color: var(--cor-secundaria);
+  color: black;
   font-size: 14px;
 }
 
-.form-search ::placeholder {
+.form-search input::placeholder {
   color: var(--cor-primaria);
 }
 
 .form-search button {
   padding: 0 12px;
-  border: 3px solid var(--cor-primaria);
+  border: 5px solid var(--cor-primaria);
   border-left: none;
   border-radius: 0 20px 20px 0;
+  background-color: var(--cor-secundaria);
   cursor: pointer;
   color: black;
   display: flex;
@@ -105,6 +107,7 @@ body {
   font-size: 14px;
 }
 
+/* Área de Login/Cadastro/ */
 .user-options {
   display: flex;
   align-items: center;
@@ -120,56 +123,116 @@ body {
   background-color: rgb(224, 223, 223);
   border-radius: 50%;
   transition: background 0.3s ease;
-}
-
-.user-options a:hover {
-  background-color: #e64a19;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
 }
 
 .icon {
   width: 40px;
   height: 40px;
-  display: block;
   object-fit: contain;
-  margin: 0;
+}
+
+.user-name {
+  position: absolute;
+  top: 52px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  width: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.user-menu-container {
+  position: relative;
+}
+
+/* Menu Suspenso */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 180px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.dropdown-menu p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.dropdown-menu button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 5px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #e60000;
+}
+
+.main_conteiner {
+  display: grid;
+  grid-auto-flow: row;
 }
 
 /* Categorias da lista */
 .lista_categorias {
-  padding: 25px 30px 25px 100px;
-  margin: 30px 10% 15px;
   background-color: var(--cor-secundaria);
+  padding: 25px 30px;
+  margin: 15px 0;
+  width: 100%;
+  max-width: 1050px;
+  justify-self: center;;
   display: grid;
-  grid-template-columns: auto 200px 200px 200px;
+  grid-template-columns: 25px auto 12.5rem 12.5rem 12.5rem;
+}
+
+.lista_categorias .nada1 {
+  color: var(--cor-secundaria);
 }
 
 .lista_categorias .produto {
   font-size: 1.1rem;
+  justify-self: flex-start;
+  padding-left: 50px;
 }
 
-.lista_categorias .preco-unitario {
-  justify-self: center;
+.lista_categorias .preco-unitario, .lista_categorias .quantidade, .lista_categorias .preco-total {
   font-size: 1.1rem;
-}
-
-.lista_categorias .quantidade {
   justify-self: center;
-  font-size: 1.1rem;
-}
-
-.lista_categorias .preco-total {
-  justify-self: center;
-  font-size: 1.1rem;
 }
 
 /* Itens da lista */
 .carrinho_item {
-  max-height: 150px;
-  padding: 25px 30px;
-  margin: 15px 10%;
   background-color: var(--cor-secundaria);
+  max-height: 200px;
+  max-width: 1050px;
+  width: 100%;
+  padding: 25px 30px;
+  margin: 15px 0;
   display: grid;
-  grid-template-columns: 25px 150px auto 200px 200px 200px;
+  grid-template-columns: 25px 150px auto 12.5rem 12.5rem 12.5rem;
+  grid-template-areas:
+    "marker name name precoUni quantidade precoTotal"
+    "marker img img precoUni quantidade precoTotal";
+  justify-self: center;
 }
 
 .carrinho_item .marker {
@@ -177,94 +240,84 @@ body {
   display: grid;
   grid-template-columns: 1.5rem 1px;
   color: var(--cor-secundaria);
+  grid-area: marker;
 }
 
-.carrinho_item .imagem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.carrinho_item .imagem .img {
+.carrinho_item .img {
   height: 90px;
+  justify-self: flex-start;
+  padding-left: 40px;
+  grid-area: img;
 }
 
-.carrinho_item .imagem .promo_desc {
-  font-size: 0.6rem;
+.carrinho_item .nome {
   color: var(--cor-primaria);
+  font-size: 1rem;
+  font-weight: bold;
+  height: fit-content;
+  min-width: 120px;
+  padding-left: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  grid-area: name;
 }
 
-.carrinho_item .item_name {
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  gap: 5px;
-
-}
-
-.carrinho_item .item_name .nome {
-  color: var(--cor-primaria);
-}
-
-.carrinho_item .item_name .descricao {
-  font-size: 0.85rem;
-  height: auto;
-}
-
-.carrinho_item .preco_uni {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.carrinho_item .preco_uni .preco_original {
-  font-size: 0.85rem;
-  color: var(--cor-cinza);
-  text-decoration: line-through
-}
-
-.carrinho_item .preco_uni .preco_promo {
-  font-size: 0.9rem;
+.carrinho_item .preco_unitario {
+  align-self: center;
+  justify-self: center;
+  grid-area: precoUni;
 }
 
 .carrinho_item .quantidade {
+  height: fit-content;
+  width: 200px;
+  padding: 5px 10px;
+  border: 1px solid var(--cor-primaria);
+  border-radius: 5px;
+  gap: 10px;
+  align-self: center;
+  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-}
-
-.carrinho_item .quantidade label {
-  font-size: 1rem;
-}
-
-.carrinho_item .quantidade i {
-  color: black;
-  font-size: 0.9rem;
+  grid-area: quantidade;
 }
 
 .carrinho_item .quantidade .excluirItem {
   background-color: var(--cor-secundaria);
   border: 2px var(--cor-primaria);
+  font-size: 1rem;
+  margin-right: 20px;
+}
+
+.carrinho_item .quantidade label, .carrinho_item .quantidade i {
+  font-size: 1rem;
 }
 
 .carrinho_item .preco_total {
   justify-self: center;
   align-self: center;
   color: var(--cor-primaria);
-  font-size: 0.9rem;
+  font-size: 1rem;
+  grid-area: precoTotal;
 }
 
 
 /* Finalização */
 .finisher {
-  padding: 25px 30px;
-  margin: 20px 10% 0;
   background-color: var(--cor-secundaria);
+  padding: 25px 30px;
+  margin: 15px 0 0;
+  width: 100%;
+  max-width: 1050px;
+  justify-self: center;
   display: grid;
   grid-template-columns: 220px auto auto 200px;
+  grid-template-areas: "selectAll excluir valorTotal continuar";
   gap: 30px;
+  position: sticky;
+  bottom: 0px;
 }
 
 .finisher .select_all {
@@ -273,7 +326,7 @@ body {
   grid-template-columns: 1.5rem auto;
   align-self: center;
   gap: 1em;
-
+  grid-area: selectAll;
 }
 
 .finisher .excluir {
@@ -281,24 +334,22 @@ body {
   align-self: center;
   justify-self: left;
   border: 0;
+  grid-area: excluir;
 }
 
 .finisher .preco_final {
   align-self: center;
-  justify-self: right;
-}
-
-.finisher .preco_final .total {
   justify-self: end;
+  grid-area: valorTotal;
+  gap: 10px;
 }
 
-.finisher .preco_final .total .texto {
+.finisher .preco_final .texto {
   font-size: 1.1rem;
 }
 
-.finisher .preco_final .total .preco {
+.finisher .preco_final .preco {
   font-size: 1.3rem;
-  margin-left: 10px;
   color: var(--cor-primaria);
 }
 
@@ -310,6 +361,7 @@ body {
   border: 4px solid var(--cor-primaria);
   border-radius: 8px;
   padding: 15px 80px;
+  grid-area: continuar;
 }
 
 .finisher .finalizar:disabled,
@@ -318,38 +370,69 @@ body {
   background-color: var(--cor-secundaria);
 }
 
-input {
+a, input, button {
   cursor: pointer;
 }
 
-a {
-  cursor: pointer;
-}
+/* Responsividade */
 
-button {
-  cursor: pointer;
-}
-
-@media (max-width: 1200px) {
-  .lista_categorias {
-    margin: 30px 0 15px;
-  }
-
-  .carrinho_item {
-    margin: 15px 0;
-  }
-
-  .finisher {
-    margin: 30px 0 0;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .conteiner_head {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 15px 10px;
+    gap: 10px;
   }
 
   .form-search {
+    width: 100%;
+    max-width: 100%;
     margin: 10px 0;
   }
+
+  .user-options {
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .main_conteiner_head {
+    margin-bottom: 0;
+  }
+  
+  .lista_categorias {
+    display: none;
+  }
+  
+  .carrinho_item {
+    padding: 10px 30px;
+    grid-template-columns: 25px 150px auto auto;
+    grid-template-areas:
+    "marker name name name"
+    "marker img precoUni precoTotal"
+    "marker img quantidade quantidade";
+  }
+
+  .finisher {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "selectAll valorTotal"
+      "excluir continuar";
+      padding: 25px 15px;
+      gap: 0;
+    }
+
+    .finisher .excluir {
+      align-self: flex-start;
+      padding-top: 10px;
+      padding-left: 42px;
+    }
+
+    .finisher .preco_final {
+      justify-self: center;
+      font-size: 1rem;
+      gap: 5px;
+    }
 }
