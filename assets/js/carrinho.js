@@ -63,9 +63,36 @@ const excluir = (produtoId) => {
     .then(response => response.json());
 };
 
-const seguirParaFinalizacao = (produtoId) => {
-    
-    location.href='finalizacao.html'
+const seguirParaFinalizacao = (selected) => {
+    const itensSelecionados = Array.from(selected)
+    fetch('http://localhost/ecommerce/api/index.php?controller=pedido&action=finalizarCompra', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            itensSelecionados
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.status === "success") {
+        const pedidoId = data.pedido_id;
+
+        // Salva no localStorage
+        localStorage.setItem("pedido_id", pedidoId);
+
+        console.log("Pedido finalizado. ID salvo:", pedidoId);
+
+        // Redireciona para a página de pagamento, por exemplo
+        window.location.href = "finalizacao.html";
+    } else {
+        console.error("Erro ao finalizar compra:", data.message);
+    }
+    })
+    .catch(error => {
+    console.error("Erro na requisição:", error);
+    });
 }
 
     // Dropdown do usuário
@@ -237,15 +264,17 @@ if (data.status === 'success') {
         const finalizar = finisherContainer.querySelector(".finalizar");
         finalizar.disabled = true;
         
-        // TODO completar o itensSelecionados
         finalizar.addEventListener('click', () => {
-            const itensSelecionados = [];
+            const selected = [];
             const lis = ul.children;
             for (let i = 0; i < lis.length; i++) { // Verifica todos os itens de l1
                 const checkElem = lis[i].querySelector('.itemCheckbox');
                 if (checkElem.checked) {
-                    itensSelecionados.push(checkElem.getAttribute('data-produto'));
+                    selected.push(checkElem.getAttribute('data-produto'));
                 }
+            }
+            if (selected.length) {
+                seguirParaFinalizacao(selected)
             }
         })
 

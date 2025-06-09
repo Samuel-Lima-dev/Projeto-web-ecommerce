@@ -7,13 +7,45 @@ if (!token) {
 
 const sidebarContainer = document.querySelector('.sidebar')
 const botoes = Array.from(sidebarContainer.querySelectorAll('.pagamento'));
+const finalizar = document.querySelector('.confirmar');
 botoes.forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelector('.active')?.classList.remove('active');
         btn.classList.add('active');
-        document.querySelector('.confirmar').disabled = false
+        finalizar.disabled = false
     })
-})
+});
+
+finalizar.addEventListener('click', () => {
+    if (document.querySelector('.active')) {
+        const pedidoId = localStorage.getItem("pedido_id");
+        const metodoSelec = document.querySelector('.active').id;
+        finalizarCompra(pedidoId, metodoSelec);
+}});
+
+const finalizarCompra = (pedidoId, metodoDP) => {
+    const pedido_id = pedidoId;
+    const metodo = metodoDP;
+    fetch('http://localhost/ecommerce/api/index.php?controller=pedido&action=finalizarPagamento', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({pedido_id, metodo})
+
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.status === "success") {
+        console.error("Compra finalizada com sucesso");
+    } else {
+        console.log("Erro ao finalizar compra:", data.message);
+    }
+    })
+    .catch(error => {
+    console.error("Erro na requisição:", error);
+    });
+};
 
 
 // Adiciona os itens à tela
