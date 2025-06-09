@@ -92,13 +92,20 @@
             <label class="title">Selecione a forma de pagamento</label>
             <div class="botoes">
                 <button id="pix" class="pagamento">Pix</button>
-                <button id="debito" class="pagamento">Débito</button>
-                <button id="credito" class="pagamento">Crédito</button>
+                <button id="dinheiro" class="pagamento">Dinherio</button>
+                <button id="cartao" class="pagamento">Cartão</button>
                 <button id="boleto" class="pagamento">Boleto</button>
             </div>
             <button class="confirmar" disabled>Finalizar Compra</button>
         </div>
     </main>
+    <div class="popup" inert>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="text">Sua compra foi realizada com sucesso, agradecemos a preferencia</div>
+        <button class="btn" onclick="voltarCarinho()">Ok</butt>
+      </div>
+    </div>
     <script src="../assets/js/finalizacao.js"></script>
   </body>
 </html>

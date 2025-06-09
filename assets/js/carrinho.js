@@ -135,7 +135,7 @@ function toggleDropdown(event) {
 
 function logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('user_name');
+    localStorage.removeItem('pedido_id');
     localStorage.removeItem('carrinho');
     window.location.reload();
 }
@@ -198,9 +198,9 @@ if (data.status === 'success') {
                 <label class="marker"> 
                     <input type="checkbox" class="itemCheckbox" data-produto="${item.produto_id}">
                 </label>
-                    <img src="${item.imagem}" class="img">
-                    <label class="nome">${item.descricao}</label>
-                    <label class="preco_unitario">R$ ${precoUnitario.toFixed(2)}</label>
+                <img src="${item.imagem}" class="img">
+                <label class="nome">${item.descricao}</label>
+                <label class="preco_unitario">R$ ${precoUnitario.toFixed(2)}</label>
                 <div class="quantidade">
                     <button class="excluirItem" onclick="confirmarExcluir(${item.produto_id})">Excluir</button>
                     <a class="menos" data-produto="${item.produto_id}">

@@ -13,6 +13,7 @@ botoes.forEach(btn => {
         document.querySelector('.active')?.classList.remove('active');
         btn.classList.add('active');
         finalizar.disabled = false
+        console.log(document.querySelector('.active').id)
     })
 });
 
@@ -21,7 +22,8 @@ finalizar.addEventListener('click', () => {
         const pedidoId = localStorage.getItem("pedido_id");
         const metodoSelec = document.querySelector('.active').id;
         finalizarCompra(pedidoId, metodoSelec);
-}});
+    }
+});
 
 const finalizarCompra = (pedidoId, metodoDP) => {
     const pedido_id = pedidoId;
@@ -37,9 +39,11 @@ const finalizarCompra = (pedidoId, metodoDP) => {
     .then(response => response.json())
     .then(data => {
     if (data.status === "success") {
-        console.error("Compra finalizada com sucesso");
+        console.log("Compra realizada");
+        document.querySelector('.popup').classList.add('show');
+        document.querySelector('.popup').removeAttribute('inert');
     } else {
-        console.log("Erro ao finalizar compra:", data.message);
+        console.error("Erro ao finalizar compra:", data.message);
     }
     })
     .catch(error => {
@@ -47,6 +51,9 @@ const finalizarCompra = (pedidoId, metodoDP) => {
     });
 };
 
+voltarCarinho = () => {
+    window.location.href = 'carrinho.html'
+}
 
 // Adiciona os itens à tela
 /*
