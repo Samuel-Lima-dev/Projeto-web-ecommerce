@@ -23,16 +23,28 @@ class Carrinho{
                     p.preco,
                     p.estoque,
                     p.categoria_id,
-                    p.status_produto
+                    p.status_produto,
+                    MIN(i.caminho_imagem) AS imagem
                 FROM Itens_Carrinho ic
                 INNER JOIN Produtos p ON ic.produto_id = p.id
-                WHERE ic.carrinho_id = :id_carrinho";
+                LEFT JOIN imagens i ON p.id = i.produto_id
+                WHERE ic.carrinho_id = :id_carrinho
+                GROUP BY 
+                    ic.quantidade,
+                    ic.preco_unitario,
+                    p.id,
+                    p.descricao,
+                    p.preco,
+                    p.estoque,
+                    p.categoria_id,
+                    p.status_produto";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id_carrinho', $id_carrinho, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function criarCarrinho($id_usuario){
         $stmt = $this->conn->prepare(

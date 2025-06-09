@@ -14,25 +14,41 @@ class Produto{
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     }
 
-    // Buscar todos os produtos da tabela
-    public function buscarTodos(){
-        $stmt = $this->conn->query("SELECT * FROM Produtos");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+// Buscar todos os produtos da tabela
+public function buscarTodos(){
+    $sql = "SELECT p.*, MIN(i.caminho_imagem) AS caminho_imagem 
+            FROM produtos p
+            LEFT JOIN imagens i ON p.id = i.produto_id
+            GROUP BY p.id";
+    
+    $stmt = $this->conn->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    //Buscar produto especifico pelo o seu ID
-    public function buscarPorId($id){
-        $stmt = $this->conn->prepare("SELECT * FROM Produtos WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+// Buscar produto específico pelo seu ID
+public function buscarPorId($id){
+    $sql = "SELECT p.*, MIN(i.caminho_imagem) AS caminho_imagem 
+            FROM produtos p
+            LEFT JOIN imagens i ON p.id = i.produto_id
+            WHERE p.id = :id
+            GROUP BY p.id
+            LIMIT 1";
+    
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
-    public function buscaPorFiltro($descricao ='', $fornecedorNome ='', $categoriaNome ='') {
-    $sql = "SELECT p.* FROM produtos p 
+// Buscar produtos por filtros (descricao, fornecedor, categoria)
+public function buscaPorFiltro($descricao = '', $fornecedorNome = '', $categoriaNome = '') {
+    $sql = "SELECT p.*, MIN(i.caminho_imagem) AS caminho_imagem 
+            FROM produtos p 
             INNER JOIN categorias c ON p.categoria_id = c.id
             INNER JOIN fornecedores f ON p.fornecedor_id = f.id
+            LEFT JOIN imagens i ON p.id = i.produto_id
             WHERE 1=1";
+
     $params = [];
 
     if (!empty($descricao)) {
@@ -44,10 +60,13 @@ class Produto{
         $sql .= " AND c.nome = :categoria";
         $params[':categoria'] = $categoriaNome;
     }
+
     if (!empty($fornecedorNome)) {
         $sql .= " AND f.nome = :fornecedor";
         $params[':fornecedor'] = $fornecedorNome;
     }
+
+    $sql .= " GROUP BY p.id";
 
     $stmt = $this->conn->prepare($sql);
     $stmt->execute($params);

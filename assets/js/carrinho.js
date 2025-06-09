@@ -171,7 +171,7 @@ if (data.status === 'success') {
                 <label class="marker"> 
                     <input type="checkbox" class="itemCheckbox" data-produto="${item.produto_id}">
                 </label>
-                    <img src="${imagemPath}" class="img">
+                    <img src="${item.imagem}" class="img">
                     <label class="nome">${item.descricao}</label>
                     <label class="preco_unitario">R$ ${precoUnitario.toFixed(2)}</label>
                 <div class="quantidade">
