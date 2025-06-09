@@ -63,8 +63,12 @@ const excluir = (produtoId) => {
     .then(response => response.json());
 };
 
-    // login 
+const seguirParaFinalizacao = (produtoId) => {
+    
+    location.href='finalizacao.html'
+}
 
+    // Dropdown do usuário
 function exibirNomeUsuario() {
 const token = localStorage.getItem('token');
 
@@ -223,17 +227,28 @@ if (data.status === 'success') {
             </label>
             <input type="button" class="excluir" value="Excluir">
             <div class="preco_final">
-                    <label class="texto">Total (<span id="totalItens">0</span> itens):</label>
+                    <label class="texto">Total <span id="totalItens">0</span> item(s):</label>
                     <label class="preco">R$ 0,00</label>
             </div>
             <input type="button" class="finalizar" value="Continuar">
         </div>
         `;
 
-        // Desabilita o botão finalizar
         const finalizar = finisherContainer.querySelector(".finalizar");
         finalizar.disabled = true;
         
+        // TODO completar o itensSelecionados
+        finalizar.addEventListener('click', () => {
+            const itensSelecionados = [];
+            const lis = ul.children;
+            for (let i = 0; i < lis.length; i++) { // Verifica todos os itens de l1
+                const checkElem = lis[i].querySelector('.itemCheckbox');
+                if (checkElem.checked) {
+                    itensSelecionados.push(checkElem.getAttribute('data-produto'));
+                }
+            }
+        })
+
 
         const btnExcluir = finisherContainer.querySelector('.excluir');
         btnExcluir.addEventListener('click', () => {
@@ -288,7 +303,6 @@ if (data.status === 'success') {
             lblPrecoTotal.textContent = 'R$ ' + ValorTotal.toFixed(2);
             finalizar.disabled = !Boolean(totalMarcados);
         }
-
 
     } else {
         carrinhoContainer.innerHTML += `<p class="aviso_empty">Parece que seu carrinho está vazio. Adicione alguns itens!</p>`;

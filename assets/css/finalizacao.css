@@ -1,0 +1,264 @@
+:root {
+    --cor-primaria: #FF5722;
+    --cor-secundaria: #fafafa;
+    --cor-fundo: #DADADA;
+    --cor-cinza: rgba(0, 0, 0, 50%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--cor-fundo);
+}
+
+/* Cabeçalho */
+header {
+    position: sticky;
+    top: 0;
+}
+
+.header_container {
+    height: fit-content;
+    width: 100%;
+    background-color: var(--cor-secundaria);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo_home {
+    padding: 15px 5%;
+}
+
+.header_container .logo_home a {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-weight: bold;
+    gap: 10px;
+}
+
+.header_container .logo_home label {
+    border-left: 1px solid var(--cor-primaria);
+    padding: 10px;
+    font-weight: normal;
+}
+
+.header_container .logo_home img {
+    width: auto;
+    height: 50px;
+}
+
+.header_container .divisao {
+    width: 100%;
+    height: 15px;
+    background-color: var(--cor-fundo);
+}
+
+/* Itens do pedido  */
+main {
+    display: flex;
+    flex-direction: row;
+    margin: 0 1% 1% 1%;
+    gap: 1%;
+}
+
+.main_content {
+    width: 70%;
+    height: calc(100vh - 130px) fit-content;
+    background-color: var(--cor-secundaria);
+}
+
+li {
+    background-color: var(--cor-secundaria);
+    padding: 25px 2.5%;
+    margin: 10px 0;
+    width: 100%;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas:
+        "name name precoTotal"
+        "img quantidade precoTotal"
+        "img precoUni precoTotal";
+}
+
+li .nome {
+    color: var(--cor-primaria);
+    font-size: 1rem;
+    font-weight: bold;
+    height: fit-content;
+    min-width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    grid-area: name;
+}
+
+li .img {
+    height: 90px;
+    width: fit-content;
+    justify-self: left;
+    grid-area: img;
+}
+
+li .quantidade {
+    font-size: 1rem;
+    height: fit-content;
+    align-self: end;
+    justify-self: left;
+    padding-left: 10px;
+    grid-area: quantidade;
+}
+
+li .preco_unitario {
+    height: fit-content;
+    justify-self: left;
+    padding-left: 10px;
+    grid-area: precoUni;
+}
+
+li .preco_total {
+    justify-self: end;
+    align-self: center;
+    padding-right: 5%;
+    color: var(--cor-primaria);
+    font-size: 1.3rem;
+    grid-area: precoTotal;
+}
+
+.sidebar {
+    width: 30%;
+    height: calc(100vh - 115px);
+    padding: 4%;
+    background-color: var(--cor-secundaria);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar .title {
+    height: fit-content;
+    padding: 15px;
+    font-size: 1.2rem;
+    color: var(--cor-primaria);
+    text-align: center;
+}
+
+.sidebar .botoes {
+    width: 100%;
+    height: fit-content;
+    padding: 2.5% 10%;
+    gap: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.sidebar .pagamento {
+    height: 40px;
+    width: 50%;
+    background-color: var(--cor-secundaria);
+    border: 1px solid var(--cor-primaria);
+    color: var(--cor-primaria);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 250ms;
+}
+
+.sidebar .pagamento.active {
+    background-color: var(--cor-primaria);
+    color: var(--cor-secundaria);
+    width: 60%;
+}
+
+.sidebar .confirmar {
+    height: 80px;
+    width: 100%;
+    padding: 5%;
+    font-size: 1.2rem;
+    background-color: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
+    color: var(--cor-secundaria);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 250ms;
+}
+
+.sidebar .confirmar:disabled {
+    background-color: var(--cor-secundaria);
+    border: 1px solid grey;
+    color: grey;
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+    .header_container .divisao {
+        height: 10px;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    .main_content {
+        width: 100%;
+        margin-bottom: 10px;
+        height: fit-content;
+        background-color: var(--cor-secundaria);
+    }
+
+    .sidebar {
+        width: 100%;
+        height: fit-content;
+        padding: 2%;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "texto texto"
+            "botoes botao";
+    }
+
+    .sidebar .title {
+        font-size: 1rem;
+        padding: 1%;
+        grid-area: texto;
+    }
+
+    .sidebar .botoes {
+        width: 100%;
+        padding: 2.5% 0;
+        justify-content: center;
+        gap: 10%;
+        row-gap: 5px;
+        grid-area: botoes;
+    }
+
+    .sidebar .pagamento {
+        height: 50px;
+        width: 35%;
+        padding: 2.5% 0;
+    }
+
+    .sidebar .pagamento.active {
+        width: 38%;
+    }
+
+    .sidebar .confirmar {
+        width: 100%;
+        grid-area: botao;
+    }
+}
