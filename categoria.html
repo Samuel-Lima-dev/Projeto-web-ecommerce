@@ -1,182 +1,100 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br"><html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Loja online com os melhores produtos e ofertas">
-    <meta name="keywords" content="e-commerce, loja, ofertas, produtos">
-    <meta name="author" content="nome do Projeto">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/index.css">
-    <title>Home Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Loja online com os melhores produtos e ofertas" />
+  <meta name="keywords" content="e-commerce, loja, ofertas, produtos" />
+  <meta name="author" content="nome do Projeto" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <title>Home Center</title>
 </head>
 <body>
-    <header>
-        <div class="main_conteiner_head">
-    
-            <div class="conteiner_head">
-
-
-            <div class="logo_home"> 
-                <a href="index.html">
-                    <img src="assets/img/logo.png" alt="Home Center logo">
-                    Home Center</a>
-            </div> 
-                
-                <form action="pages/busca.html" class="form-search" method="GET">
-                    <input type="text" name="buscar" placeholder="O que você procura?">
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </form>
-            
-            
-                <div class="user-options">
-                    <div class="user-menu-container">
-                        <a href="pages/accounts/login.html" id="login-link">
-                            <img src="assets/img/logo login (2).png" alt="Login" class="icon" />
-                            <div id="user-firstname" class="user-name"></div>
-                        </a>
-
-                        <!-- Dropdown -->
-                        <div id="user-dropdown" class="dropdown-menu">
-                        <p id="dropdown-nome"></p>
-                        <p id="dropdown-email"></p>
-                        <button onclick="logout()" id="logout-btn">Sair</button>
-                        </div>
-                    </div>
-
-                    <a href="pages/carrinho.html">
-                        <img src="assets/img/sacola.png" alt="Carrinho" class="icon" />
-                    </a>
-                 </div>
-
-            </div>
+  <header>
+    <div class="main_conteiner_head">
+      <div class="conteiner_head">
+        <div class="logo_home">
+          <a href="index.html">
+            <img src="assets/img/logo.png" alt="Home Center logo" />
+            Home Center
+          </a>
         </div>
-    </header>
-       <nav>
-                    <ul>
-                      <li><a href="/ecommerce/categoria.html?categoria=Quarto">Quarto</a></li>
-                      <li><a href="/ecommerce/categoria.html?categoria=Cozinha">Cozinha</a></li>
-                      <li><a href="/ecommerce/categoria.html?categoria=Sala">Sala de Estar</a></li>
-                      <li><a href="/ecommerce/categoria.html?categoria=banheiro">Banheiro</a></li>
-                    </ul>
-                  </nav>
- <style>
-        .lista-produtos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;   
-            gap: 20px;
-            width: 100%;              
-            padding: 20px;            
-            box-sizing: border-box;    
-        }
 
-        .produto {
-            width: 200px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            background-color: #fff;
-        }
+        <form action="pages/busca.html" class="form-search" method="GET">
+          <input type="text" name="buscar" placeholder="O que você procura?" />
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
 
-        .produto img {
-            max-width: 100%;
-            height: auto;
-        }
-        #titulo-categoria {
-        color: #FF5722;
-        }
+        <div class="user-options">
+          <div class="user-menu-container">
+            <a href="pages/accounts/login.html" id="login-link">
+              <img src="assets/img/logo login (2).png" alt="Login" class="icon" />
+              <div id="user-firstname" class="user-name"></div>
+            </a>
+            <div id="user-dropdown" class="dropdown-menu">
+              <p id="dropdown-nome"></p>
+              <p id="dropdown-email"></p>
+              <button onclick="logout()" id="logout-btn">Sair</button>
+            </div>
+          </div>
+
+          <a href="pages/carrinho.html">
+            <img src="assets/img/sacola.png" alt="Carrinho" class="icon" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="categoria.html?categoria=quarto">Quarto</a></li>
+      <li><a href="categoria.html?categoria=cozinha">Cozinha</a></li>
+      <li><a href="categoria.html?categoria=sala">Sala de Estar</a></li>
+      <li><a href="categoria.html?categoria=banheiro">Banheiro</a></li>
+    </ul>
+  </nav>
+
+  <h1 id="titulo-categoria">Carregando...</h1>
+  <div id="container-categoria"></div>
+
+  <style>
+            .lista-produtos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .produto {
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .produto img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    #titulo-categoria {
+      color: #FF5722;
+      text-align: center;
+      margin-top: 20px;
+    }
     </style>
-</head>
-<body>
-    <h1 id="titulo-categoria">Carregando...</h1>
-    <div id="container-categoria"></div>
-
-    <script>
-                const nomesExibicao = {
-        automotivo: 'Automotivo',
-        eletro: 'Eletrodomésticos',
-        eletrica: 'Elétrica',
-        'ACES DE BANHEIROS / PIAS E GABINETES': 'Acessórios para Banheiro',
-        'ACES. BANHEIROS/CONEXÕES/GABINETES': 'Banheiro',
-        ESQUADRIAS: 'Ferramentas e Acessórios',
-        'LOUÇAS METAIS SANIT': 'Acessórios',
-        'LUSTRES E LUMINARIAS': 'Iluminação',
-        'MÓVEIS E DECORAÇÕES': 'Móveis e Decoração',
-        'PIAS E GABINETES': 'Gabinetes e Pias',
-         Sala :'Sala de Estar' ,
-        'TINTAS E ACESSORIOS': 'Tintas',
-        banheiro : 'Banheiro'
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-                const params = new URLSearchParams(window.location.search);
-                const categoria = params.get('categoria');
-
-                if (categoria) {
-                    const nomeBonito = nomesExibicao[categoria] || categoria;
-                    document.getElementById('titulo-categoria').textContent = nomeBonito;
-                    console.log("Categoria recebida na URL:", categoria);
-                    carregarProdutosPorCategoria(categoria);
-                } else {
-                    document.getElementById('titulo-categoria').textContent = "Categoria não especificada.";
-                }
-            });
-        function carregarProdutosPorCategoria(categoria) {
-            fetch('http://localhost/ecommerce/api/index.php?controller=produto&action=buscarPorFiltro', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    categoria: categoria,
-                    descricao: '',
-                    fornecedor: ''
-                })
-            })
-            .then(response => response.json())
-            .then(resultado => {
-                if (resultado.status === 'success' && Array.isArray(resultado.data)) {
-                 renderizarTodosProdutos(resultado.data);
-                } else {
-                    document.getElementById('container-categoria').innerHTML = '<p>Nenhum produto encontrado.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Erro na requisição:', error);
-                document.getElementById('container-categoria').innerHTML = '<p>Erro ao carregar produtos.</p>';
-            });
-        }
-        
-
-        function renderizarTodosProdutos(produtos) {
-            const container = document.getElementById('container-categoria');
-            container.innerHTML = '';
-
-            const lista = document.createElement('div');
-            lista.classList.add('lista-produtos');
-
-            produtos.forEach(produto => {
-                const divProduto = document.createElement('div');
-                divProduto.classList.add('produto');
-                divProduto.innerHTML = `
-                    <a href="pages/accounts/detalhes.html?id=${produto.id}" class="link-produto">
-                        <img src="img/${produto.imagem}" alt="${produto.nome}">
-                        <h3>${produto.descricao}</h3>
-                        <p>R$ ${Number(produto.preco).toFixed(2)}</p>
-                    </a>
-                `;
-                lista.appendChild(divProduto);
-            });
-
-            container.appendChild(lista);
-        }
-    </script>
-
  
+
+ <script src="assets/js/categoria.js"></script>
+ <script src="assets/js/menu.js"></script>
 </body>
 </html>

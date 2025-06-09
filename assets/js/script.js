@@ -27,12 +27,4 @@ function mudarSlide(i) {
 // Inicia o carrossel automático
 setInterval(avancarSlide, 8000);
 
-// Login e bt de sair
 
-document.addEventListener('DOMContentLoaded', () => {
-    const nome = localStorage.getItem('nome');
-    if (nome) {
-        const userInfoDiv = document.getElementById('user-info');
-        userInfoDiv.textContent = `Olá, ${nome}!`;
-    }
-});

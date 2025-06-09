@@ -13,7 +13,7 @@ if (!produtoId) {
                 document.getElementById('detalhes-produto').innerHTML = `
                 <div class="produto-detalhe">
                     <div class="coluna-esquerda">
-                        <img src="/ecommerce/assets/img/teste.webp" alt="Imagem de teste">
+                        <img src="${produto.caminho_imagem}" alt="${produto.nome}">
                     </div>
                     <div class="coluna-direita">
                         <h1>${produto.descricao}</h1>

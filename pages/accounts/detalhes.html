@@ -33,13 +33,25 @@
             
             
                 <div class="user-options">
+                    <div class="user-menu-container">
+                        <a href="login.html" id="login-link">
+                            <img src="../../assets/img/logo login (2).png" alt="Login" class="icon" />
+                            <div id="user-firstname" class="user-name"></div>
+                        </a>
 
-                        <a href="../accounts/login.html">
-                            <img src="../../assets/img/logo login (2).png" alt="Login" class="icon"></a>
-
-                        <a href="../carrinho.html">
-                            <img src="../../assets/img/sacola.png" alt="Carrinho" class="icon"></a>
+                        <!-- Dropdown -->
+                        <div id="user-dropdown" class="dropdown-menu">
+                        <p id="dropdown-nome"></p>
+                        <p id="dropdown-email"></p>
+                        <button onclick="logout()" id="logout-btn">Sair</button>
                         </div>
+                    </div>
+
+                    <a href="carrinho.html">
+                        <img src="../../assets/img/sacola.png" alt="Carrinho" class="icon" />
+                    </a>
+                 </div>
+
 
 
             </div>
@@ -66,8 +78,10 @@
         <p>&copy; 2025 E-Commerce Center. Todos os direitos reservados.</p>
     </footer>
 
+    
     <script src="../../assets/js/detalhes.js"></script>
-
+    <script src="../../assets/js/menu.js"></script>
+  
 
 </body>
 </html>
