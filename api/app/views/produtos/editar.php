@@ -1,28 +1,103 @@
-<h2>Editar Produto</h2>
 
-<form action="index.php?controller=produto&action=editProduct&id=<?php echo $produto['id']; ?>" method="POST">
-    <label for="descricao">Descrição:</label><br>
-    <input type="text" name="descricao" id="descricao" value="<?php echo htmlspecialchars($produto['descricao']); ?>" required><br><br>
+<?php
+$id = $_GET['id'] ?? null;
+?>
 
-    <label for="preco">Preço:</label><br>
-    <input type="number" step="0.01" name="preco" id="preco" value="<?php echo $produto['preco']; ?>" required><br><br>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Produto</title>
+</head>
+<body>
+    <h1>Editar Produto</h1>
 
-    <label for="estoque">Estoque:</label><br>
-    <input type="number" name="estoque" id="estoque" value="<?php echo $produto['estoque']; ?>" required><br><br>
+    <form id="form-editar-produto">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
 
-    <label for="status_produto">Status:</label><br>
-    <select name="status_produto" id="status_produto" required>
-        <option value="ativo" <?php if($produto['status_produto'] == 'ativo') echo 'selected'; ?>>Ativo</option>
-        <option value="inativo" <?php if($produto['status_produto'] == 'inativo') echo 'selected'; ?>>Inativo</option>
-    </select><br><br>
+        <label>Descrição:<br>
+            <input type="text" name="descricao" required>
+        </label><br><br>
 
-    <label for="categoria_id">ID da Categoria:</label><br>
-    <input type="number" name="categoria_id" id="categoria_id" value="<?php echo $produto['categoria_id']; ?>" required><br><br>
+        <label>Preço:<br>
+            <input type="number" name="preco" step="0.01" required>
+        </label><br><br>
 
-    <label for="fornecedor_id">ID do Fornecedor:</label><br>
-    <input type="number" name="fornecedor_id" id="fornecedor_id" value="<?php echo $produto['fornecedor_id']; ?>" required><br><br>
+        <label>Estoque:<br>
+            <input type="number" name="estoque" required>
+        </label><br><br>
 
-    <button type="submit">Salvar Alterações</button>
-</form>
+        <label>Status do Produto:<br>
+            <input type="text" name="status_produto" required>
+        </label><br><br>
 
-<a href="index.php?controller=produto&action=listar">Voltar</a>
+        <label>Categoria ID:<br>
+            <input type="number" name="categoria_id" required>
+        </label><br><br>
+
+        <label>Fornecedor ID:<br>
+            <input type="number" name="fornecedor_id" required>
+        </label><br><br>
+
+        <label>URL da Imagem:<br>
+            <input type="text" name="imagem">
+        </label><br><br>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <pre id="resultado"></pre>
+
+    <script>
+        const id = <?= json_encode($id) ?>;
+
+        // Carrega os dados do produto
+        fetch(`http://localhost/ecommerce/api/index.php?controller=produto&action=editarProduto&id=${id}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const produto = data.data;
+                    for (const key in produto) {
+                        const input = document.querySelector(`[name="${key}"]`);
+                        if (input) input.value = produto[key];
+                    }
+                } else {
+                    document.getElementById('resultado').textContent = data.message;
+                }
+            });
+
+        // Submete o formulário com método PUT e JSON puro
+        document.getElementById('form-editar-produto').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const dados = {};
+            formData.forEach((value, key) => {
+                // Converte valores numéricos corretamente
+                if (key === 'preco') {
+                    dados[key] = parseFloat(value);
+                } else if (['estoque', 'id', 'categoria_id', 'fornecedor_id'].includes(key)) {
+                    dados[key] = parseInt(value);
+                } else {
+                    dados[key] = value;
+                }
+            });
+
+            fetch('http://localhost/ecommerce/api/index.php?controller=produto&action=editarProduto', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('resultado').textContent = JSON.stringify(result, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('resultado').textContent = 'Erro: ' + error;
+            });
+        });
+    </script>
+</body>
+</html>

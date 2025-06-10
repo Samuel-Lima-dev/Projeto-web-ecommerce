@@ -118,53 +118,77 @@ class ProdutoController{
     }
 
     public function editarProduto(){
-        header('Content-Type: application/json');
+    header('Content-Type: application/json');
 
+    // Captura método atual
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method === 'PUT') {
+        // PUT: pegar dados do corpo JSON
         $data = json_decode(file_get_contents('php://input'), true);
-        $id = (int)$data['id'] ?? null;
-        if(!$id){
+        $id = (int)($data['id'] ?? null);
+
+        if (!$id) {
             echo json_encode([
                 'status' => 'error', 
-                'message' => 'ID não informado']);
+                'message' => 'ID não informado'
+            ]);
             return;
         }
 
-        if($_SERVER['REQUEST_METHOD'] === 'PUT'){
-            
-            $descricao = $data['descricao'] ?? '';
-            $preco = (float) $data['preco'] ?? 0;
-            $estoque = (int)$data['estoque'] ?? 0;
-            $status_produto = $data['status_produto'] ?? '';
-            $categoria_id= (int)$data['categoria_id'] ?? null;
-            $fornecedor_id = (int)$data['fornecedor_id'] ?? null;
+        // Coleta dados
+        $descricao = $data['descricao'] ?? '';
+        $preco = (float)($data['preco'] ?? 0);
+        $estoque = (int)($data['estoque'] ?? 0);
+        $status_produto = $data['status_produto'] ?? '';
+        $categoria_id = (int)($data['categoria_id'] ?? null);
+        $fornecedor_id = (int)($data['fornecedor_id'] ?? null);
+        $imagem_url = $data['imagem'] ?? null;
 
-            $sucesso = $this->produtoModel->update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id);
+        // Atualiza produto
+        $sucesso = $this->produtoModel->update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id, $imagem_url);
 
-            if ($sucesso) {
-                echo json_encode([
-                    'status' => 'success', 
-                    'message' => 'Produto atualizado com sucesso']);
-            } else {
-                echo json_encode([
-                    'status' => 'error', 
-                    'message' => 'Erro ao atualizar o produto']);
-            }
-            
-        }else{
-            $produto = $this->produtoModel->buscarPorId($id);
-            if ($produto) {
-                echo json_encode([
-                    'status' => 'success', 
-                    'data' => $produto]);
-            } else {
-                echo json_encode([
-                    'status' => 'error', 
-                    'message' => 'Produto não encontrado']);
-            }
+        echo json_encode([
+            'status' => $sucesso ? 'success' : 'error',
+            'message' => $sucesso ? 'Produto atualizado com sucesso' : 'Erro ao atualizar o produto'
+        ]);
+    } else if ($method === 'GET') {
+        // GET: pegar ID da URL
+        $id = (int)($_GET['id'] ?? null);
+
+        if (!$id) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID não informado'
+            ]);
+            return;
         }
-        exit();
 
+        $produto = $this->produtoModel->buscarPorId($id);
+
+        if ($produto) {
+            echo json_encode([
+                'status' => 'success',
+                'data' => $produto
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Produto não encontrado'
+            ]);
+        }
+    } else {
+        // Método não permitido
+        http_response_code(405);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Método não permitido'
+        ]);
     }
+
+    exit();
+}
+
 
     public function excluir() {
         header('Content-Type: application/json');

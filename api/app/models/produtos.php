@@ -89,10 +89,16 @@ public function buscaPorFiltro($descricao = '', $fornecedorNome = '', $categoria
 
     }
 
-    public function update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id){
+    public function update($id, $descricao, $preco, $estoque, $status_produto, $categoria_id, $fornecedor_id, $imagem_caminho) {
+    try {
+        $this->conn->beginTransaction();
+
+        // Atualizar dados do produto
         $stmt = $this->conn->prepare(
             "UPDATE Produtos 
-            SET descricao = :descricao, preco = :preco, estoque = :estoque, status_produto = :status_produto ,categoria_id = :categoria, fornecedor_id = :fornecedor WHERE id = :id"
+             SET descricao = :descricao, preco = :preco, estoque = :estoque, 
+                 status_produto = :status_produto, categoria_id = :categoria, fornecedor_id = :fornecedor 
+             WHERE id = :id"
         );
         $stmt->bindParam(':descricao', $descricao);
         $stmt->bindParam(':preco', $preco);
@@ -101,8 +107,45 @@ public function buscaPorFiltro($descricao = '', $fornecedorNome = '', $categoria
         $stmt->bindParam(':categoria', $categoria_id, PDO::PARAM_INT);
         $stmt->bindParam(':fornecedor', $fornecedor_id, PDO::PARAM_INT);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        $stmt->execute();
+
+        // Se imagem foi enviada, trata imagem
+        if ($imagem_caminho !== null) {
+            // Verifica se já existe imagem para esse produto
+            $check = $this->conn->prepare("SELECT id FROM Imagens WHERE produto_id = :produto_id");
+            $check->bindParam(':produto_id', $id, PDO::PARAM_INT);
+            $check->execute();
+
+            if ($check->rowCount() > 0) {
+                // Atualiza a imagem existente
+                $stmtImg = $this->conn->prepare(
+                    "UPDATE Imagens 
+                     SET caminho_imagem = :caminho 
+                     WHERE produto_id = :produto_id"
+                );
+            } else {
+                // Insere nova imagem
+                $stmtImg = $this->conn->prepare(
+                    "INSERT INTO Imagens (produto_id, caminho_imagem) 
+                     VALUES (:produto_id, :caminho)"
+                );
+            }
+
+            $stmtImg->bindParam(':produto_id', $id, PDO::PARAM_INT);
+            $stmtImg->bindParam(':caminho', $imagem_caminho);
+            $stmtImg->execute();
+        }
+
+        $this->conn->commit();
+        return true;
+
+    } catch (Exception $e) {
+        $this->conn->rollBack();
+        return false;
     }
+}
+
+
 
     public function excluir($id){
         $stmt = $this->conn->prepare("DELETE FROM Produtos WHERE id = :id");
