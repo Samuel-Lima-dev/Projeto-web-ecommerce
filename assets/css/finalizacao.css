@@ -73,7 +73,7 @@ main {
     gap: 1%;
 }
 
-.main_content {
+#content_container {
     width: 70%;
     height: calc(100vh - 130px) fit-content;
     background-color: var(--cor-secundaria);
@@ -86,7 +86,7 @@ li {
     width: 100%;
     justify-self: center;
     display: grid;
-    grid-template-columns: auto auto 1fr;
+    grid-template-columns: 100px auto 1fr;
     grid-template-areas:
         "name name precoTotal"
         "img quantidade precoTotal"
@@ -106,8 +106,8 @@ li .nome {
 }
 
 li .img {
-    height: 90px;
-    width: fit-content;
+    height: 100px;
+    width: 100px;
     justify-self: left;
     grid-area: img;
 }
@@ -274,7 +274,7 @@ li .preco_total {
         flex-direction: column;
     }
 
-    .main_content {
+    #content_container {
         width: 100%;
         margin-bottom: 10px;
         height: fit-content;
