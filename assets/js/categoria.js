@@ -68,7 +68,7 @@ const nomesExibicao = {
         divProduto.classList.add('produto');
         divProduto.innerHTML = `
           <a href="pages/accounts/detalhes.html?id=${produto.id}" class="link-produto">
-            <img src="assets/img/produtos/${produto.imagem}" alt="Imagem do produto ${produto.nome}">
+            <img src="${produto.caminho_imagem}" alt="${produto.nome}">
             <h3>${produto.descricao}</h3>
             <p>R$ ${Number(produto.preco).toFixed(2)}</p>
           </a>

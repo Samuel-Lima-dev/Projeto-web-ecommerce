@@ -223,7 +223,7 @@ nav ul li a:hover {
 .produto-detalhe {
   display: flex;
   gap: 60px;
-  padding: 60px;
+  padding: 150px 65px; /* ↑ aumentou o padding vertical */
   flex-wrap: wrap;
   background-color: #e8e7e7;
   justify-content: center;
@@ -232,6 +232,8 @@ nav ul li a:hover {
 .coluna-esquerda img {
   width: 100%;
   max-width: 400px;
+  height: 300px;          /* altura fixa */
+  object-fit: cover;      /* recorta a imagem para preencher a área */
   border-radius: 8px;
 }
 

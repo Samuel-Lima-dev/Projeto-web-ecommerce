@@ -26,5 +26,4 @@ function mudarSlide(i) {
 
 // Inicia o carrossel automático
 setInterval(avancarSlide, 8000);
-
-
+  
