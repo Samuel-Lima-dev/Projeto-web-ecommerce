@@ -49,6 +49,30 @@
             return $pedidos;
         }
 
+        public function listarItensPedido($pedido_id, $usuario_id) {
+            $sql = "SELECT 
+                        ip.id,
+                        ip.pedido_id,
+                        ip.produto_id,
+                        ip.quantidade,
+                        ip.preco_unitario,
+                        p.descricao,
+                        MIN(img.caminho_imagem) AS imagem,
+                        ped.total AS total_pedido
+                    FROM itens_pedidos ip
+                    INNER JOIN produtos p ON ip.produto_id = p.id
+                    LEFT JOIN imagens img ON p.id = img.produto_id
+                    INNER JOIN pedidos ped ON ip.pedido_id = ped.id
+                    WHERE ip.pedido_id = :pedido_id AND ped.usuario_id = :usuario_id
+                    GROUP BY ip.id, ip.pedido_id, ip.produto_id, ip.quantidade, ip.preco_unitario, p.descricao, ped.total";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':pedido_id', $pedido_id, PDO::PARAM_INT);
+            $stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
 
         // calcular valor total dos itens

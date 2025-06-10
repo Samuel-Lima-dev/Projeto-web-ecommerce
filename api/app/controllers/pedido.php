@@ -48,7 +48,44 @@ class PedidoController{
             }
         }
     
-}
+    }
+
+    public function listarItensPedido() {
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            try {
+                $auth = \Autenticacao\JwtService::autenticar();
+                $usuario_id = $auth['usuarioId'];
+
+                // Recebe o ID do pedido via POST
+                $data = json_decode(file_get_contents("php://input"), true);
+                $pedido_id = $data['pedido_id'] ?? null;
+
+                if (!$pedido_id) {
+                    http_response_code(400);
+                    echo json_encode(['status' => 'error', 'message' => 'ID do pedido não informado.']);
+                    return;
+                }
+
+                $itens = $this->pedidoModel->listarItensPedido($pedido_id, $usuario_id);
+
+                echo json_encode([
+                    'status' => 'success',
+                    'itens' => $itens
+                ]);
+
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erro ao listar itens do pedido: ' . $e->getMessage()
+                ]);
+            }
+        }
+    }
+
 
 
 
