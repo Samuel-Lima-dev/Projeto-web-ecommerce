@@ -174,8 +174,6 @@ if (data.status === 'success') {
             const li = document.createElement('li');
             li.classList.add('carrinho_item');
 
-            const imagemPath = `../upload/67f3286446f94.webp`;
-
             // Convertendo strings em números
             const precoOriginal = parseFloat(item.preco);
             const precoUnitario = parseFloat(item.preco_unitario);

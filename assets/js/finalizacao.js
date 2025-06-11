@@ -33,15 +33,13 @@ fetch('http://localhost/ecommerce/api/index.php?controller=pedido&action=listarI
         data.itens.forEach(item => {
             const li = document.createElement('li');
 
-            const imagemPath = `../upload/67f3286446f94.webp`;
-
             // Convertendo strings em números
             const precoOriginal = parseFloat(item.preco);
             const precoUnitario = parseFloat(item.preco_unitario);
 
             li.innerHTML = `
-            <label class="nome">Nome ${item.descricao}</label>
-            <img src="../upload/67f3286446f94.webp" class="img">
+            <label class="nome">${item.descricao}</label>
+            <img src="${item.imagem}" alt="Imagem do produto" class="img">
             <label class="quantidade">${item.quantidade} x</label>
             <label class="preco_unitario">R$ ${precoUnitario.toFixed(2)}</label>
             <label class="preco_total">R$ ${calcularValorTotal(item).toFixed(2)}</label>
@@ -65,7 +63,6 @@ botoes.forEach(btn => {
         document.querySelector('.active')?.classList.remove('active');
         btn.classList.add('active');
         finalizar.disabled = false
-        console.log(document.querySelector('.active').id)
     })
 });
 

@@ -246,9 +246,12 @@ body {
 }
 
 .carrinho_item .img {
-  height: 90px;
+  height: 100px;
+  width: 100px;
+  margin-left: 40px;
+  object-fit: cover;
+  border-radius: 5px;
   justify-self: flex-start;
-  padding-left: 40px;
   grid-area: img;
 }
 
