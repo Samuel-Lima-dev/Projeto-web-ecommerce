@@ -111,6 +111,42 @@ Finalizar Compra (criar pedido)
   "pedido_id": 42
 }
 
+Endpoint:
+POST /ecommerce/api/index.php?controller=pedido&action=listarItensPedido
+
+Autenticação:
+- Tipo: Bearer Token (JWT)
+- Cabeçalho obrigatório:
+  Authorization: Bearer {seu_token_jwt}
+
+Requisição:
+- Método: POST
+- Content-Type: application/json
+- Body (JSON):
+  {
+    "pedido_id": 25
+  }
+
+Campos esperados:
+- pedido_id (integer, obrigatório): ID do pedido que será consultado.
+
+Resposta - Sucesso (200 OK):
+{
+  "status": "success",
+  "itens": [
+    {
+      "id": 1,
+      "pedido_id": 25,
+      "produto_id": 7,
+      "quantidade": 2,
+      "preco_unitario": 49.90,
+      "descricao": "Camisa Polo Masculina",
+      "total_pedido": 99.80
+    },
+    ...
+  ]
+}
+
 Finalizar Pagamento
 - POST index.php?controller=pedido&action=finalizarPagamento
 - Headers: Authorization: Bearer {JWT}

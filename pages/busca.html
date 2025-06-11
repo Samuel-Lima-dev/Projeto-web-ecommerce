@@ -1,14 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Loja online com os melhores produtos e ofertas">
+    <meta name="keywords" content="e-commerce, loja, ofertas, produtos">
+    <meta name="author" content="nome do Projeto">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <title>Home Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
-    <h1>Resultados da Busca</h1>
+    <header>
+        <div class="main_conteiner_head">
+    
+            <div class="conteiner_head">
+
+
+            <div class="logo_home"> 
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="Home Center logo">
+                    Home Center</a>
+            </div> 
+                
+                <form action="busca.html" class="form-search" method="GET">
+                    <input type="text" name="buscar" placeholder="O que você procura?">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            
+            
+                <div class="user-options">
+                    <div class="user-menu-container">
+                        <a href="pages/accounts/login.html" id="login-link">
+                            <img src="../assets/img/logo login (2).png" alt="Login" class="icon" />
+                            <div id="user-firstname" class="user-name"></div>
+                        </a>
+
+                        <!-- Dropdown -->
+                        <div id="user-dropdown" class="dropdown-menu">
+                        <p id="dropdown-nome"></p>
+                        <p id="dropdown-email"></p>
+                        <button onclick="logout()" id="logout-btn">Sair</button>
+                        </div>
+                    </div>
+
+                    <a href="pages/carrinho.html">
+                        <img src="../assets/img/sacola.png" alt="Carrinho" class="icon" />
+                    </a>
+                 </div>
+
+
+
+            </div>
+        </div>
+    </header>
+                <nav>
+                    <ul>
+                      <li><a href="#categoria-acesbanheirosgabinetes">Ultilidades Para Banheiro</a></li>
+                      <li><a href="#categoria-eletrica">Elétrica</a></li>
+                      <li><a href="#categoria-balcaodeferramentas">Ferramentas</a></li>
+                      <li><a href="#categoria-automotivo">Automotivo</a></li>
+                    </ul>
+                  </nav>
+
+
     <div id="resultados"></div>
     
     <script src="../assets/js/busca.js"></script>
+    <script src="../assets/js/index.js"></script>
 </body>
 </html>
