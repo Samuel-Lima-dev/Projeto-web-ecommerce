@@ -4,6 +4,15 @@ if (!token) {
  
     window.location.href = '../pages/accounts/login.html'; // redireciona se não estiver logado
 }
+// Guarda lista de produtos do recebida do fetch
+let listaProdutos = undefined;
+
+buscarProduto = (produtoId) => {
+    if (listaProdutos?.length) { // veririfcar se a variável está preenchida e se a lista tem pelo menos 1 item
+        return listaProdutos.find(item => item.produto_id == produtoId)
+    }
+    return undefined
+}
 
 const reduzirQuantidade = (produto) => {
     let novaQtd = parseInt(produto.quantidade) - 1;
@@ -159,6 +168,7 @@ if (data.status === 'success') {
     const ul = document.createElement('ul');
 
     if (Array.isArray(data.itens) && data.itens.length > 0) {
+        listaProdutos = data.itens;
 
         data.itens.forEach(item => {
             const li = document.createElement('li');
