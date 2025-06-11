@@ -14,25 +14,50 @@ buscarProduto = (produtoId) => {
     return undefined
 }
 
-const reduzirQuantidade = (produto) => {
-    let novaQtd = parseInt(produto.quantidade) - 1;
+const reduzirQuantidade = (item) => {
+    let novaQtd = parseInt(item.quantidade) - 1;
     if (novaQtd <= 0) {
-        confirmarExcluir(produto.produto_id);
+        confirmarExcluir(item.produto_id);
         return false;
     }
-    produto.quantidade = novaQtd;
+    modifyQuantidade(item, -1)
+    item.quantidade = novaQtd;
     return true;
 }
 
-const acrecentarQuantidade = (produto) => {
-    let novaQtd = parseInt(produto.quantidade) + 1;
-    const estoque = parseInt(produto.estoque);
+const acrecentarQuantidade = (item) => {
+    let novaQtd = parseInt(item.quantidade) + 1;
+    const estoque = parseInt(item.estoque);
     if (estoque < novaQtd) {
         alert('Não há mais itens em estoque');
         return false;
     }
-    produto.quantidade = novaQtd;
+    modifyQuantidade(item, +1)
+    item.quantidade = novaQtd;
     return true;
+}
+
+function modifyQuantidade(item, quantity) {
+
+    const id_produto = item.produto_id;
+    const quantidade = quantity;
+    const preco = item.preco;
+    fetch('http://localhost/ecommerce/api/index.php?controller=carrinho&action=adicionarItem', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id_produto, quantidade, preco})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            return
+        } else {
+            alert("Erro: " + data.message);
+        }
+    });
 }
 
 const calcularValorTotal = (item) => {
